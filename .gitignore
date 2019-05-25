@@ -1,6 +1,7 @@
-/target
+/target/
+/src/test/
+.idea
 .settings
 .classpath
 .project
-.README.md
-.gitignore
+README.md
