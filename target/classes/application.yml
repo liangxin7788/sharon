@@ -2,7 +2,7 @@
 server:
   servlet:
     context-path: /
-  port: 80
+  port: 9080
 
 spring:
   datasource:
@@ -11,7 +11,7 @@ spring:
       type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: com.mysql.jdbc.Driver
       username: root
-      password: root
+      password: liangxin
       validation-query: SELECT 1;
       sql-script-encoding: UTF-8
       initial-size: 1
@@ -32,7 +32,7 @@ spring:
       type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: org.mariadb.jdbc.Driver
       username: sunny
-      password: sunny123
+      password: 6345463asd
       validation-query: SELECT 1;
       sql-script-encoding: UTF-8
       initial-size: 1
