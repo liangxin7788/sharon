@@ -1,6 +1,9 @@
-##ignore this file##
-/target/
-/src/test/
-.project
+/.idea
+/target
+/.settings
+/.classpath
+/.project
 .settings
 .classpath
+.project
+.gitignore

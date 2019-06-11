@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: sharon
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: Administrator
+Built-By: liangxin
 Implementation-Vendor-Id: com.fun.business
 Build-Jdk: 1.8.0_162
 Implementation-URL: http://maven.apache.org
