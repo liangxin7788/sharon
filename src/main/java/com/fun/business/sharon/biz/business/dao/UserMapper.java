@@ -1,7 +1,7 @@
-package com.fun.business.sharon.biz.personal.dao;
+package com.fun.business.sharon.biz.business.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.fun.business.sharon.biz.personal.bean.User;
+import com.fun.business.sharon.biz.business.bean.User;
 
 /**
  * <p>
@@ -9,7 +9,7 @@ import com.fun.business.sharon.biz.personal.bean.User;
  * </p>
  *
  * @author liangxin
- * @since 2019-05-21
+ * @since 2019-06-11
  */
 public interface UserMapper extends BaseMapper<User> {
 

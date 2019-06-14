@@ -1,7 +1,7 @@
 package com.fun.business.sharon.biz.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.fun.business.sharon.biz.business.bean.PictureInfo;
+import com.fun.business.sharon.biz.business.bean.HotTopic;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.fun.business.sharon.biz.business.bean.PictureInfo;
  * @author liangxin
  * @since 2019-06-11
  */
-public interface PictureInfoService extends IService<PictureInfo> {
+public interface HotTopicService extends IService<HotTopic> {
 
 }

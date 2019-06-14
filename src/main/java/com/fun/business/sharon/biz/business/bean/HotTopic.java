@@ -1,10 +1,9 @@
 package com.fun.business.sharon.biz.business.bean;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+import java.util.Date;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,7 +20,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class PictureInfo implements Serializable {
+public class HotTopic implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,39 +28,28 @@ public class PictureInfo implements Serializable {
     private Integer id;
 
     /**
-     * 创建人id
+     * 新闻标题
      */
-    private Integer userId;
+    private String newsTitle;
 
     /**
-     * 图片链接
+     * 链接
      */
-    private String url;
+    private String newsLink;
 
     /**
-     * 图片大小
+     * 当前浏览数
      */
-    private Double size;
+    private Integer number;
 
     /**
-     * 图片名字
+     * 上升/下降
      */
-    private String pictureName;
+    private Boolean trend;
 
     /**
-     * 图片介绍
+     * 录入时间
      */
-    private String pictureIntroduce;
-
-    /**
-     * 创建时间
-     */
-    private Date createAt;
-
-    /**
-     * 最后修改时间
-     */
-    private Date updateAt;
-
-
+    private Date loadAt;
+    
 }

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
  * @since 2019-06-11
  */
 @Controller
-@RequestMapping("/pictureInfo")
-public class PictureInfoController {
+@RequestMapping("/remind")
+public class RemindController {
 
 }

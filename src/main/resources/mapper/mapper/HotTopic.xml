@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fun.business.sharon.biz.business.dao.HotTopicMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.fun.business.sharon.biz.business.bean.HotTopic">
+        <id column="id" property="id" />
+        <result column="news_title" property="newsTitle" />
+        <result column="news_link" property="newsLink" />
+        <result column="number" property="number" />
+        <result column="trend" property="trend" />
+        <result column="load_at" property="loadAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, news_title, news_link, number, trend, load_at
+    </sql>
+
+</mapper>

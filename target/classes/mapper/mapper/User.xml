@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fun.business.sharon.temp.code.dao.UserMapper">
+<mapper namespace="com.fun.business.sharon.biz.business.dao.UserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.fun.business.sharon.temp.code.bean.User">
+    <resultMap id="BaseResultMap" type="com.fun.business.sharon.biz.business.bean.User">
         <id column="id" property="id" />
-        <result column="password" property="password" />
-        <result column="username" property="username" />
-        <result column="encrypted_password" property="encryptedPassword" />
-        <result column="encrypted_username" property="encryptedUsername" />
-        <result column="imaccount" property="imaccount" />
-        <result column="employee" property="employee" />
-        <result column="manager" property="manager" />
-        <result column="inactive" property="inactive" />
-        <result column="customerservice_id" property="customerserviceId" />
-        <result column="groupname" property="groupname" />
-        <result column="isshowvendorinfo" property="isshowvendorinfo" />
-        <result column="salechannelaccountgroup_id" property="salechannelaccountgroupId" />
-        <result column="lastlogintime" property="lastlogintime" />
+        <result column="user_name" property="userName" />
+        <result column="email" property="email" />
+        <result column="address" property="address" />
+        <result column="create_user" property="createUser" />
+        <result column="description" property="description" />
+        <result column="create_at" property="createAt" />
+        <result column="update_at" property="updateAt" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, password, username, encrypted_password, encrypted_username, imaccount, employee, manager, inactive, customerservice_id, groupname, isshowvendorinfo, salechannelaccountgroup_id, lastlogintime
+        id, user_name, email, address, create_user, description, create_at, update_at
     </sql>
 
 </mapper>

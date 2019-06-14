@@ -2,8 +2,7 @@ package com.fun.business.sharon.biz.business.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -13,8 +12,8 @@ import org.springframework.stereotype.Controller;
  * @author liangxin
  * @since 2019-06-11
  */
-@Controller
-@RequestMapping("/pictureInfo")
-public class PictureInfoController {
+@RestController
+@RequestMapping("/user")
+public class UserController {
 
 }

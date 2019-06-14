@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class PictureInfo implements Serializable {
+public class Remind implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,29 +29,34 @@ public class PictureInfo implements Serializable {
     private Integer id;
 
     /**
-     * 创建人id
+     * 用户id
      */
     private Integer userId;
 
     /**
-     * 图片链接
+     * 备忘标题
      */
-    private String url;
+    private String title;
 
     /**
-     * 图片大小
+     * 备忘内容
      */
-    private Double size;
+    private String content;
 
     /**
-     * 图片名字
+     * 类别；1-邮箱；2-短信；3-微信
      */
-    private String pictureName;
+    private Integer type;
 
     /**
-     * 图片介绍
+     * 提醒时间
      */
-    private String pictureIntroduce;
+    private Date alertTime;
+
+    /**
+     * 提醒哪些用户，多个用逗号相隔
+     */
+    private String alertUsers;
 
     /**
      * 创建时间
@@ -59,7 +64,7 @@ public class PictureInfo implements Serializable {
     private Date createAt;
 
     /**
-     * 最后修改时间
+     * 更新时间
      */
     private Date updateAt;
 

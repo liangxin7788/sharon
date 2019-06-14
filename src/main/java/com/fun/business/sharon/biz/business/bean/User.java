@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ * 用户表
  * </p>
  *
  * @author liangxin
@@ -21,37 +21,40 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class PictureInfo implements Serializable {
+public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 主键
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
-     * 创建人id
+     * 用户名
      */
-    private Integer userId;
+    private String userName;
 
     /**
-     * 图片链接
+     * 邮箱
      */
-    private String url;
+    private String email;
 
     /**
-     * 图片大小
+     * 地址
      */
-    private Double size;
+    private String address;
 
     /**
-     * 图片名字
+     * 创建人
      */
-    private String pictureName;
+    private String createUser;
 
     /**
-     * 图片介绍
+     * 描述性信息
      */
-    private String pictureIntroduce;
+    private String description;
 
     /**
      * 创建时间
@@ -59,7 +62,7 @@ public class PictureInfo implements Serializable {
     private Date createAt;
 
     /**
-     * 最后修改时间
+     * 最后更新时间
      */
     private Date updateAt;
 

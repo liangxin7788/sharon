@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author liangxin
- * @since 2019-05-20
+ * @since 2019-06-11
  */
 @Service
 public class PictureInfoServiceImpl extends ServiceImpl<PictureInfoMapper, PictureInfo> implements PictureInfoService {
