@@ -1,7 +1,7 @@
 #project-name
 server:
   servlet:
-    context-path: /
+    context-path: /sharon
   port: 9080
 
 spring:

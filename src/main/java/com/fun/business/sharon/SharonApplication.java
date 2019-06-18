@@ -17,16 +17,6 @@ import org.springframework.web.client.RestTemplate;
 public class SharonApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SharonApplication.class, args);
-		System.out.println("sharon is running, please login on http:locallhost/swagger-ui.html");
+		System.out.println("sharon is running, please login on http:localhost:9080/sharon/swagger-ui.html");
 	}
-//	
-//	@Bean
-//	public RestTemplate initRestTemplate() {
-//		HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-//		httpRequestFactory.setConnectionRequestTimeout(160000);
-//		httpRequestFactory.setConnectTimeout(160000);
-//		httpRequestFactory.setReadTimeout(160000);
-//		return new RestTemplate(httpRequestFactory);
-//	}
-//	
 }

@@ -26,7 +26,7 @@ public class TestController {
 
     @Test
     public void testExcel() throws IOException {
-        List<String[]> excel = ExcelPoiUtil.readExcel("ceshi");
+        List<String[]> excel = ExcelPoiUtil.readExcel("ceshi.xlsx");
         if (ObjectUtil.isNotEmpty(excel)) {
             for (String[] obj : excel) {
                 String mainSku = obj[0];

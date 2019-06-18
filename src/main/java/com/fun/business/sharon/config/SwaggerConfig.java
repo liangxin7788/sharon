@@ -34,10 +34,10 @@ public class SwaggerConfig {
 
 	private ApiInfo apiInfo(String description) {
 		return new ApiInfoBuilder().title("sharon 1.0.1 API")
-				.description(String.format("sharon's project %s interface.", description)).version("1.0")
+				.description(String.format("sharon's project %s interface.", description)).version("1.0.0")
 				.termsOfServiceUrl("http://www.liangxin.fun/")
-				.contact(new Contact("大数据服务部", "http://www.liangxin.fun/", "lx_4509@163.com"))
-				.license("北京拓尔思信息技术股份有限公司").licenseUrl("http://www.liangxin.fun/").build();
+//				.contact(new Contact("技术部", "http://www.liangxin.fun/", "lx_4509@163.com"))
+				.license("ShenZhen Vilson Technology Co.,Ltd.").licenseUrl("http://www.liangxin.fun/").build();
 	}
 	
 }

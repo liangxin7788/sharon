@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.util.ResourceUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,7 +22,7 @@ import static org.apache.poi.ss.usermodel.CellType.STRING;
 /**
  * @Package: com.fun.business.sharon.utils
  * @ClassName: ExcelPoiUtil
- * @Description: Excel导入导出工具类，将文件/模板放到resources目录下使用
+ * @Description: Excel导入导出工具类，
  * @Author: liangxin
  * @CreateDate: 2019/6/14 11:07
  * @UpdateDate: 2019/6/14 11:07
@@ -29,11 +30,21 @@ import static org.apache.poi.ss.usermodel.CellType.STRING;
 @Slf4j
 public class ExcelPoiUtil {
 
+    /**
+     * 将文件/模板放到resources目录下使用
+     * @param filename
+     * @return
+     * @throws IOException
+     */
     public static List<String[]> readExcel(String filename) throws IOException {
-        //检查文件
-//        checkFile(file);
+//        public static List<String[]> readExcel(MultipartFile file) throws IOException {
+
+        //方式2 获得Workbook工作薄对象，下面的步骤相同
+//        Workbook workbook2 = getWorkBook2(file);
+
         //获得Workbook工作薄对象
         Workbook workbook = getWorkBook(filename);
+
         //创建返回对象，把每行中的值作为一个数组，所有行作为一个集合返回
         List<String[]> list = new ArrayList<String[]>();
         if (workbook != null) {
@@ -82,6 +93,28 @@ public class ExcelPoiUtil {
         try {
             //获取excel文件的io流
             InputStream is = new FileInputStream(ResourceUtils.getFile("classpath:"+fileName));
+            //根据文件后缀名不同(xls和xlsx)获得不同的Workbook实现类对象
+            if (fileName.endsWith("xls")) {
+                //2003
+                workbook = new HSSFWorkbook(is);
+            } else if (fileName.endsWith("xlsx")) {
+                //2007
+                workbook = new XSSFWorkbook(is);
+            }
+        } catch (IOException e) {
+            log.info(e.getMessage());
+        }
+        return workbook;
+    }
+
+    public static Workbook getWorkBook2(MultipartFile file) {
+        //获得文件名
+        String fileName = file.getOriginalFilename();
+        //创建Workbook工作薄对象，表示整个excel
+        Workbook workbook = null;
+        try {
+            //获取excel文件的io流
+            InputStream is = file.getInputStream();
             //根据文件后缀名不同(xls和xlsx)获得不同的Workbook实现类对象
             if (fileName.endsWith("xls")) {
                 //2003
