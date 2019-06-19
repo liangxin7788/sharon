@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class PictureInfo implements Serializable {
+public class FileInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,24 +34,24 @@ public class PictureInfo implements Serializable {
     private Integer userId;
 
     /**
-     * 图片链接
+     * 文件链接
      */
     private String url;
 
     /**
-     * 图片大小
+     * 文件大小
      */
-    private Double size;
+    private Long size;
 
     /**
-     * 图片名字
+     * 文件名字
      */
-    private String pictureName;
+    private String fileName;
 
     /**
-     * 图片介绍
+     * 文件介绍
      */
-    private String pictureIntroduce;
+    private String fileIntroduce;
 
     /**
      * 创建时间
@@ -63,5 +63,9 @@ public class PictureInfo implements Serializable {
      */
     private Date updateAt;
 
+    /**
+     * 存放路径
+     */
+    private String path;
 
 }

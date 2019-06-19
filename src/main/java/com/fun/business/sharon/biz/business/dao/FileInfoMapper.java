@@ -1,7 +1,7 @@
 package com.fun.business.sharon.biz.business.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.fun.business.sharon.biz.business.bean.PictureInfo;
+import com.fun.business.sharon.biz.business.bean.FileInfo;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.fun.business.sharon.biz.business.bean.PictureInfo;
  * @author liangxin
  * @since 2019-06-11
  */
-public interface PictureInfoMapper extends BaseMapper<PictureInfo> {
+public interface FileInfoMapper extends BaseMapper<FileInfo> {
 
 }

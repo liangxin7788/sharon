@@ -62,6 +62,4 @@ spring:
     timeout: 7200
 
 sharon:
-  seaweed:
-    url: http://172.16.10.51:8888
-    max-total: 200
+  uploadPath: C:\\home\\sharon\\

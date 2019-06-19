@@ -15,6 +15,6 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 @RequestMapping("/pictureInfo")
-public class PictureInfoController {
+public class FileInfoController {
 
 }
