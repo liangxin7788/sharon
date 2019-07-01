@@ -1,5 +1,7 @@
 package com.fun.business.sharon.biz.business.service.impl;
 
+import com.fun.business.sharon.utils.ObjectUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -18,4 +20,15 @@ import com.fun.business.sharon.biz.business.service.UserService;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+    @Autowired
+    private UserMapper userMapper;
+
+    @Override
+    public User findByUserName(String userName) {
+        User findByUserName = userMapper.findByUserName(userName);
+        if (ObjectUtil.isNotEmpty(findByUserName)) {
+            return findByUserName;
+        }
+        return null;
+    }
 }

@@ -2,6 +2,7 @@ package com.fun.business.sharon.biz.business.bean;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,12 +17,12 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author liangxin
- * @since 2019-06-11
+ * @since 2019-07-01
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class HotTopic implements Serializable {
+public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,29 +30,41 @@ public class HotTopic implements Serializable {
     private Integer id;
 
     /**
-     * 新闻标题
+     * 产品名称
      */
-    private String newsTitle;
+    private String name;
 
     /**
-     * 链接
+     * 产品价格
      */
-    private String newsLink;
+    private Double price;
 
     /**
-     * 当前浏览数
+     * 产品库存
      */
-    private Integer number;
+    private Integer stock;
 
     /**
-     * 上升/下降
+     * 备注信息
      */
-    private Boolean trend;
+    private String remark;
 
     /**
-     * 录入时间
+     * 创建人id
+     */
+    private Integer createUserId;
+
+    /**
+     * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date loadAt;
-    
+    private Date createAt;
+
+    /**
+     * 更新时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date updateAt;
+
+
 }

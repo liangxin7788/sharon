@@ -15,7 +15,6 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 public class MpGenerator {
 
-
 	public static void main(String[] args) throws InterruptedException {
 		// 用来获取Mybatis-Plus.properties文件的配置信息
 		final ResourceBundle rb = ResourceBundle.getBundle("mybatis-plus");

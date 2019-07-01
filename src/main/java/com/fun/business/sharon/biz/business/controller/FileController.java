@@ -29,7 +29,7 @@ import java.util.Date;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author liangxin
@@ -47,7 +47,7 @@ public class FileController {
 
     @PostMapping("/uploadFile")
     @ApiOperation("文件上传至指定路径")
-    public GlobalResult<?> uploadFile(MultipartFile[] file, @ApiParam("文件描述信息") @RequestParam(value = "description", required = false) String description){
+    public GlobalResult<?> uploadFile(MultipartFile[] file, @ApiParam("文件描述信息") @RequestParam(value = "description", required = false) String description) {
         try {
             // 未定义上传路径，上传至默认目录
             if (ObjectUtil.isNotEmpty(file)) {
@@ -59,9 +59,9 @@ public class FileController {
                         String prefix = originalName.substring(originalName.lastIndexOf(".") + 1);
                         if ("doc".equals(prefix) || "docx".equals(prefix)) {
                             fileType = Const.DOC_FILE;
-                        }else if ("xls".equals(prefix) || "xlsx".equals(prefix)){
+                        } else if ("xls".equals(prefix) || "xlsx".equals(prefix)) {
                             fileType = Const.EXCEL_FILE;
-                        }else {
+                        } else {
                             fileType = Const.PIC_FILE;
                         }
                     }

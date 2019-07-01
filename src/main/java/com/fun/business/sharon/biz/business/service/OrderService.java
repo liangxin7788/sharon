@@ -1,7 +1,7 @@
 package com.fun.business.sharon.biz.business.service;
 
+import com.fun.business.sharon.biz.business.bean.Order;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.fun.business.sharon.biz.business.bean.User;
 
 /**
  * <p>
@@ -9,9 +9,8 @@ import com.fun.business.sharon.biz.business.bean.User;
  * </p>
  *
  * @author liangxin
- * @since 2019-06-11
+ * @since 2019-07-01
  */
-public interface UserService extends IService<User> {
+public interface OrderService extends IService<Order> {
 
-    User findByUserName(String userName);
 }
