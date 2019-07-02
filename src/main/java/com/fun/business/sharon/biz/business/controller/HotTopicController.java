@@ -2,6 +2,7 @@ package com.fun.business.sharon.biz.business.controller;
 
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,10 +76,11 @@ public class HotTopicController {
 					HotTopic hotTopic = new HotTopic();
 					hotTopic.setNewsLink(eHtml.getTit_url());
 					String title2 = eHtml.getTitle();
-//					String title = new String(eHtml.getTitle().getBytes("ASCII"));
+
 					hotTopic.setNewsTitle(title2);
 					hotTopic.setNumber(eHtml.getClicks());
 					hotTopic.setTrend("rise".equals(eHtml.getTrend()) ? true : false);
+					hotTopic.setLoadAt(new Date());
 					hotTopicService.save(hotTopic);
 				}
 				return GlobalResult.newSuccess(ObjectUtil.writeWithView(resultList, EHtml.Show.class));
@@ -86,14 +88,5 @@ public class HotTopicController {
 		}
 		return GlobalResult.newError("获取热点信息失败！");
 	}
-	
-	@ApiOperation("测试get请求")
-	@GetMapping("/testGet")
-	public String testGet(String str) {
-		Map<String,Object> map = new HashMap<String, Object>();
-		map.put("title", "今日热点");
-		map.put("description", "描述信息");
-		return JSON.toJSONString(map);
-	}
-	
+
 }

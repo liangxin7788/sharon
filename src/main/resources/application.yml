@@ -60,6 +60,17 @@ spring:
     host: 127.0.0.1
     port: 6379
     timeout: 7200
+  mail:
+    host: smtp.163.com
+    username: lx_4509@163.com
+    password: Aweiyue182520
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          connectiontimeout: 6000
+          timeout: 3000
+          writetimeout: 6000
 
 sharon:
   uploadPath: C:\\home\\sharon\\
