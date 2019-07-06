@@ -71,6 +71,8 @@ spring:
           connectiontimeout: 6000
           timeout: 3000
           writetimeout: 6000
+  rabbitmq:
+    addresses: 127.0.0.1:5672
 
 sharon:
   uploadPath: C:\\home\\sharon\\

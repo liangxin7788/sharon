@@ -1,17 +1,17 @@
 package com.fun.business.sharon.common;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-public class OperateException extends Exception{
+@Data
+@EqualsAndHashCode(callSuper = false)
+public class OperateException extends RuntimeException{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Setter
-	@Getter
 	private int code;
 	
 	public OperateException(String message){
