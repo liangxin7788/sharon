@@ -5,6 +5,10 @@ server:
   port: 9080
 
 spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
   datasource:
     sharon:
       url: jdbc:mysql://127.0.0.1:3306/sharon?allowMultiQueries=true

@@ -36,16 +36,29 @@ public class ExcelPoiUtil {
      * @return
      * @throws IOException
      */
-    public static List<String[]> readExcel(String filename) throws IOException {
-//        public static List<String[]> readExcel(MultipartFile file) throws IOException {
-
-        //方式2 获得Workbook工作薄对象，下面的步骤相同
-//        Workbook workbook2 = getWorkBook2(file);
-
+    public static List<String[]> readExcelInProject(String filename) throws IOException {
         //获得Workbook工作薄对象
         Workbook workbook = getWorkBook(filename);
 
         //创建返回对象，把每行中的值作为一个数组，所有行作为一个集合返回
+        return dealWorkbook(workbook);
+    }
+
+    /**
+     * 传入文件对象
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public static List<String[]> readExcel(MultipartFile file) throws IOException {
+        //方式2 获得Workbook工作薄对象，下面的步骤相同
+        Workbook workbook = getWorkBook2(file);
+
+        //创建返回对象，把每行中的值作为一个数组，所有行作为一个集合返回
+        return dealWorkbook(workbook);
+    }
+
+    private static List<String[]> dealWorkbook(Workbook workbook) throws IOException {
         List<String[]> list = new ArrayList<String[]>();
         if (workbook != null) {
             // 若是读取第二个sheet，则此处的sheetNum=1开始
