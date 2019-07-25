@@ -186,6 +186,13 @@
             <version>2.3.2</version>
         </dependency>
 
+        <!--上传文件的包-->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

@@ -1,7 +1,10 @@
 package com.fun.business.sharon.utils;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import org.apache.commons.io.FileUtils;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
@@ -12,9 +15,51 @@ import java.util.Map;
  */
 public class HttpUtil {
 
+    public static void main(String[] args) throws Exception {
+//        String post = post("http://192.168.160.249/wms/foreigns/queryWarehouseIdBySkus", null, "[\"15579-1\",\"D0482-6\",\"14630-5\",\"D1616\"]");
+        String post = HttpUtil.post("http://192.168.160.249/wms/foreigns/queryWarehouseIdBySkus", null,
+                JSONObject.toJSONString(FileUtils.readLines(new File("C:\\Users\\Administrator\\Desktop\\11.txt"), "utf-8")));
+
+        List<Object> list = JSON.parseArray("[" + post + "]");
+        String message = "";
+        for (Object object : list) {
+            Map<String, Object> ret = (Map<String, Object>) object;//取出list里面的值转为map
+            message = ret.get("message").toString();
+        }
+
+//        System.out.println(message);
+        List<Object> messageList = JSON.parseArray(message);
+
+        File file = new File("C:" + File.separator + "demo" + File.separator + "sku_bak.txt");
+
+        if(!file.getParentFile().exists()){
+            file.getParentFile().mkdirs();
+        }
+
+        Writer out = new FileWriter(file);
+
+        int count = 0;
+        for (Object object : messageList) {
+            Map<String, Object> ret = (Map<String, Object>) object;
+
+            String sku = ret.get("sku").toString();
+            String warehouse = ret.get("warehouseId").toString();
+
+            if (StringUtils.isNotEmpty(warehouse)) {
+                warehouse = warehouse.equals("1") ? "0" : "1";
+//              out.write("UPDATE stockkeepingunit set isxckrecord = '" + warehouse + "' WHERE article_number = '" + sku + "';" +"\n");
+                out.write(sku + "\n");
+//              String sql = "select isxckrecord, " + warehouse + " from stockkeepingunit where article_number = '" + sku + "';\n";
+//              out.write(sql);
+            }
+        }
+        out.close();
+    }
+
     public static String post(String requestUrl, String accessToken, String params)
             throws Exception {
-        String contentType = "application/x-www-form-urlencoded";
+        String contentType = "application/json";
+//        String contentType = "application/x-www-form-urlencoded";
         return HttpUtil.post(requestUrl, accessToken, contentType, params);
     }
 
@@ -29,7 +74,10 @@ public class HttpUtil {
 
     public static String post(String requestUrl, String accessToken, String contentType, String params, String encoding)
             throws Exception {
-        String url = requestUrl + "?access_token=" + accessToken;
+        String url = requestUrl;
+        if (StringUtil.isNotEmpty(accessToken)) {
+            url = requestUrl + "?access_token=" + accessToken;
+        }
         return HttpUtil.postGeneralUrl(url, contentType, params, encoding);
     }
 
