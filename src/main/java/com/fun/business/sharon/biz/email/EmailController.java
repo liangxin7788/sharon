@@ -1,6 +1,7 @@
 package com.fun.business.sharon.biz.email;
 
 import com.fun.business.sharon.common.GlobalResult;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/email")
+@Api(description = "邮件服务")
 public class EmailController {
 
     @Autowired

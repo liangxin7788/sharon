@@ -8,6 +8,7 @@ import com.fun.business.sharon.common.GlobalResult;
 import com.fun.business.sharon.utils.FileUtil;
 import com.fun.business.sharon.utils.ObjectUtil;
 import com.fun.business.sharon.utils.StringUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/file")
+@Api(description = "文件管理相关")
 public class FileController {
 
     @Autowired

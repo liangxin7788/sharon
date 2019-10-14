@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +41,8 @@ import io.swagger.annotations.ApiParam;
  */
 @RestController
 @RequestMapping("/hotTopic")
+@Api(description = "百度热点事件")
+@Slf4j
 public class HotTopicController {
 
 	@Autowired
@@ -81,6 +85,7 @@ public class HotTopicController {
 					hotTopic.setNumber(eHtml.getClicks());
 					hotTopic.setTrend("rise".equals(eHtml.getTrend()) ? true : false);
 					hotTopic.setLoadAt(new Date());
+					log.info("获取对象：" + hotTopic.toString());
 					hotTopicService.save(hotTopic);
 				}
 				return GlobalResult.newSuccess(ObjectUtil.writeWithView(resultList, EHtml.Show.class));

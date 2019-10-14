@@ -1,5 +1,6 @@
 package com.fun.business.sharon.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -71,7 +72,6 @@ public class FileUtil {
         File file = new File("D:" + File.separator + "demo" + File.separator + "test.txt");
         if(!file.getParentFile().exists()){ //如果文件的目录不存在
             file.getParentFile().mkdirs(); //创建目录
-
         }
 
         //2: 实例化OutputString 对象
@@ -93,6 +93,16 @@ public class FileUtil {
         //字符流 (输出流中含有中文时使用字符流)
         charOutStream();
         System.out.println("输出完成");
+
+        String str = "ss";
+        if (StringUtils.isEmpty(str)) {
+
+        }
+
+        if (StringUtils.isBlank(str)) {
+
+        }
+
     }
 
 }
