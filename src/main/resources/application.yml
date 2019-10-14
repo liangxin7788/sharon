@@ -1,0 +1,13 @@
+#Spring
+spring:
+  profiles:
+    active: local
+
+swagger:
+  service:
+    name: sharon
+    description: 产品管理 - Sharon
+  contact:
+    name:
+    url:
+    email:
