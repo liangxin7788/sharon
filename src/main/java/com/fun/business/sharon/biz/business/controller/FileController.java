@@ -41,7 +41,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/file")
-@Api(description = "文件管理相关")
+@Api(description = "文件上传下载")
 public class FileController {
 
     @Autowired
