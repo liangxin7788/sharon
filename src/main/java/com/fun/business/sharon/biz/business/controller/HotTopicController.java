@@ -60,12 +60,19 @@ public class HotTopicController {
 	 */
 	@GetMapping("getNewsTopN")
 	@ApiOperation("获取百度热点话题")
-	public GlobalResult<?> getNewsTopN(@ApiParam("热点类型")@RequestParam(value = "type",required = true )Integer type,
-			@ApiParam("前N条")@RequestParam(value = "topN",required = true )Integer topN
+	public GlobalResult<?> getNewsTopN(@ApiParam("热点类型")@RequestParam(value = "type",required = false )Integer type,
+			@ApiParam("前N条")@RequestParam(value = "topN",required = false )Integer topN
 			) throws OperateException, UnsupportedEncodingException{
-		String url = String.format("http://top.baidu.com/clip?b=%s", type);
+		String url = String.format("http://top.baidu.com/clip?b=%s", type==null?1:type);
 		String html = initRestTemplate.getForObject(url, String.class);
 		if (StringUtil.isNotEmpty(html)) {
+			if (ObjectUtil.isNotEmpty(topN)) {
+				if (topN==0) {
+					topN = 10;
+				}
+			}else {
+				topN = 10;
+			}
 			Pattern regex = Pattern.compile("((\\[\\{\"title).*?(}]))");
 			Matcher matcher = regex.matcher(html);
 			String result = "";

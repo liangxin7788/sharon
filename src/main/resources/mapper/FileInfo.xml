@@ -20,4 +20,44 @@
         id, user_id, url, size, file_name, file_introduce, create_at, update_at, path
     </sql>
 
+    <select id="getFileInfoListCount" resultType="java.lang.Integer">
+        select count(1) from  file_info
+        <where>
+            1 = 1
+            <if test="vo.beginTime != null">
+                and create_at &gt; #{vo.beginTime}
+            </if>
+            <if test="vo.endTime != null">
+                and create_at &lt; #{vo.endTime}
+            </if>
+            <if test="vo.fileName != null and vo.fileName != ''">
+                and file_name like concat('%',#{vo.fileName},'%')
+            </if>
+            <if test="vo.description != null and vo.description != ''">
+                and file_introduce like concat('%',#{vo.description},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getFileInfoList" resultType="com.fun.business.sharon.biz.business.bean.FileInfo">
+        select * from  file_info
+        <where>
+            1 = 1
+            <if test="vo.beginTime != null">
+                and create_at &gt; #{vo.beginTime}
+            </if>
+            <if test="vo.endTime != null">
+                and create_at &lt; #{vo.endTime}
+            </if>
+            <if test="vo.fileName != null and vo.fileName != ''">
+                and file_name like concat('%',#{vo.fileName},'%')
+            </if>
+            <if test="vo.description != null and vo.description != ''">
+                and file_introduce like concat('%',#{vo.description},'%')
+            </if>
+        </where>
+        order by update_at desc
+        limit #{offset}, #{pageSize}
+    </select>
+
 </mapper>

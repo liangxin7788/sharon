@@ -10,7 +10,7 @@
     <name>sharon</name>
     <description>a project for sharon</description>
 
-    <url>http://maven.apache.org</url>
+    <url>http://liangxin.fun:8090/swagger-ui.html</url>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -99,12 +99,12 @@
             <version>1.1.9</version>
         </dependency>
 
-        <!-- 热部署，结合下边配置 fork 标签使用 -->
-        <dependency>
+        <!-- 热部署，结合下边配置 fork 标签使用，但是会导致项目启动两次！！！！ -->
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -117,17 +117,17 @@
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
 
+        <!-- jsp -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
         </dependency>
-        <!--servlet-->
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
         </dependency>
-        <!--jsp-->
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
@@ -206,9 +206,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
+                <!--<configuration>
                     <fork>true</fork>
-                </configuration>
+                </configuration>-->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

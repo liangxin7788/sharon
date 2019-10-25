@@ -1,6 +1,7 @@
 package com.fun.business.sharon.biz.email;
 
 import com.fun.business.sharon.utils.ObjectUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -32,8 +33,8 @@ import java.util.List;
  * @CreateDate: 2019/7/1 17:10
  * @UpdateDate: 2019/7/1 17:10
  */
-@Component
 @Service
+@Slf4j
 public class MailServiceImpl implements MailService {
 
     @Autowired
@@ -49,11 +50,12 @@ public class MailServiceImpl implements MailService {
         message.setTo(to); // 邮件接受者
         message.setSubject(subject); // 主题
         message.setText(content); // 内容
-
+        log.info("发送给 " + to + " 的邮件，内容为：" + content);
         try {
             mailSender.send(message);
             return "发送成功";
         } catch (MailException e) {
+            log.error(e.getMessage(), e);
             return "发送失败";
         }
     }

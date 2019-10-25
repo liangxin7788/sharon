@@ -6,11 +6,11 @@ import com.fun.business.sharon.biz.business.service.FileInfoService;
 import com.fun.business.sharon.common.Const;
 import com.fun.business.sharon.common.GlobalResult;
 import com.fun.business.sharon.utils.FileUtil;
+import com.fun.business.sharon.utils.HttpUtil;
 import com.fun.business.sharon.utils.ObjectUtil;
 import com.fun.business.sharon.utils.StringUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -21,12 +21,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -47,9 +50,9 @@ public class FileController {
     @Value("${sharon.uploadPath}")
     private String uploadPath;
 
-    @PostMapping("/uploadFile")
-    @ApiOperation("文件上传至指定路径")
-    public GlobalResult<?> uploadFile(MultipartFile[] file, @ApiParam("文件描述信息") @RequestParam(value = "description", required = false) String description) {
+    @ApiOperation("文件上传")
+    @PostMapping(value = "/uploadFile")
+    public GlobalResult<?> uploadFile(@RequestParam(value = "file", required = true)MultipartFile[] file, @ApiParam("文件描述信息") @RequestParam(value = "description", required = false) String description) {
         try {
             // 未定义上传路径，上传至默认目录
             if (ObjectUtil.isNotEmpty(file)) {
@@ -77,7 +80,20 @@ public class FileController {
                     pictureInfo.setFileName(sonFile.getOriginalFilename());
                     pictureInfo.setUrl(Const.DOMAIN + "/" + uniquenessName);
                     pictureInfo.setFileIntroduce(description);
-                    pictureInfo.setSize(sonFile.getSize());
+
+                    long size = sonFile.getSize();
+                    DecimalFormat df = new DecimalFormat("#.00");
+                    String fileSizeString = "";
+                    if (size < 1024) {
+                        fileSizeString = df.format((double) size) + "B";
+                    } else if (size < 1048576) {
+                        fileSizeString = df.format((double) size / 1024) + "K";
+                    } else if (size < 1073741824) {
+                        fileSizeString = df.format((double) size / 1048576) + "M";
+                    } else {
+                        fileSizeString = df.format((double) size / 1073741824) +"G";
+                    }
+                    pictureInfo.setSize(fileSizeString);
                     pictureInfo.setCreateAt(new Date());
                     pictureInfo.setUpdateAt(new Date());
                     pictureInfo.setPath(filePath);
@@ -122,6 +138,29 @@ public class FileController {
             }
         }
         return null;
+    }
+
+    @GetMapping("/fileDownload")
+    @ApiOperation("/文件下载接口")
+    public void fileDownload(final HttpServletResponse response, String fileName, Integer fileId) throws Exception{
+
+        FileInfo fileInfo = fileInfoService.getById(fileId);
+        String url = fileInfo.getPath();
+        if (StringUtils.isNotEmpty(url)) {
+            byte[] data = HttpUtil.downloadBytes(url);
+            fileName = URLEncoder.encode(fileName, "UTF-8");
+            response.reset();
+//            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + new String(fileInfo.getFileName().getBytes("utf-8")) + "\"");
+            response.addHeader("Content-Length", "" + data.length);
+            response.setContentType("application/octet-stream;charset=UTF-8");
+            OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
+            outputStream.write(data);
+            outputStream.flush();
+            outputStream.close();
+            response.flushBuffer();
+            System.out.println("文件 " + fileName + " 下载完成");
+        }
     }
 
 }

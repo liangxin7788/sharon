@@ -22,8 +22,8 @@ public class EmailController {
     @Autowired
     private MailService mailService;
 
-    @PostMapping("/testSend")
-    @ApiOperation("测试邮件发送")
+    @PostMapping("/send")
+    @ApiOperation("邮件发送")
     public GlobalResult<?> testSend(@RequestBody TextMassageVo vo){
         String resut = mailService.sendSimpleMail(vo.getTo(), vo.getSubject(), vo.getContent());
         return GlobalResult.newSuccess(resut);

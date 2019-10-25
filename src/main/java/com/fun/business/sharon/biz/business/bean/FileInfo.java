@@ -42,7 +42,7 @@ public class FileInfo implements Serializable {
     /**
      * 文件大小
      */
-    private Long size;
+    private String size;
 
     /**
      * 文件名字

@@ -11,11 +11,11 @@ spring:
       suffix: .jsp
   datasource:
     sharon:
-      url: jdbc:mysql://127.0.0.1:3306/sharon?allowMultiQueries=true
+      url: jdbc:mysql://59.110.224.230:3306/sharon?allowMultiQueries=true
       type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: com.mysql.jdbc.Driver
       username: root
-      password: root
+      password: liangxin
 #      password: liangxin
       validation-query: SELECT 1;
       sql-script-encoding: UTF-8
