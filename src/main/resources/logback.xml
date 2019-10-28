@@ -18,7 +18,7 @@
     <!--配置info日志级别单独文件-->
     <appender name="FILE-info" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>D:/log/info/test_info_%d{yyyy-MM-dd}.log
+            <FileNamePattern>/log/info/test_info_%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -49,7 +49,7 @@
     <!--配置debug日志级别单独文件-->
     <appender name="FILE-debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>D:/log/debug/test_debug_%d{yyyy-MM-dd}.log
+            <FileNamePattern>/log/debug/test_debug_%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -84,7 +84,7 @@
     <!--配置error日志级别单独文件-->
     <appender name="FILE-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>D:/log/error/test_error_%d{yyyy-MM-dd}.log
+            <FileNamePattern>/log/error/test_error_%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -104,7 +104,7 @@
     <!--配置warn日志级别单独文件-->
     <appender name="FILE-warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>D:/log/warn/test_warn_%d{yyyy-MM-dd}.log
+            <FileNamePattern>/log/warn/test_warn_%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
