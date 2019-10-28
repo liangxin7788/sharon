@@ -12,6 +12,6 @@ import com.fun.business.sharon.biz.business.bean.Product;
  */
 public interface SeckillService {
 
-    Product seckill(Integer id)throws RuntimeException;
+//    Product seckill(Integer id)throws RuntimeException;
 
 }

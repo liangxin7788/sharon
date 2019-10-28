@@ -9,13 +9,21 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fun.business.sharon.biz.business.vo.DelFileVo;
 import com.fun.business.sharon.biz.business.vo.EditFileInfoVo;
 import com.fun.business.sharon.biz.business.vo.FileSearchVo;
+import com.fun.business.sharon.common.Const;
+import com.fun.business.sharon.common.GlobalResult;
 import com.fun.business.sharon.common.OperateException;
 import com.fun.business.sharon.utils.ObjectUtil;
 import com.fun.business.sharon.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +37,9 @@ import java.util.List;
 @Service
 @Slf4j
 public class FileInfoServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> implements FileInfoService {
+
+    @Value("${sharon.uploadPath}")
+    private String uploadPath;
 
     @Autowired
     private FileInfoMapper fileInfoMapper;
@@ -103,5 +114,61 @@ public class FileInfoServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> i
             log.error(e.getMessage(), e);
         }
         return null;
+    }
+
+    @Override
+    public Integer uploadFile(MultipartFile[] file, String description) {
+        Integer result = 0;
+//        try {
+//            // 未定义上传路径，上传至默认目录
+//            if (ObjectUtil.isNotEmpty(file)) {
+//                for (MultipartFile sonFile : file) {
+//                    String fileType = "";
+//                    String originalName = sonFile.getOriginalFilename();
+////                    String fileName = sonFile.getName();
+//                    if (StringUtil.isNotEmpty(originalName)) {
+//                        String prefix = originalName.substring(originalName.lastIndexOf(".") + 1);
+//                        if ("doc".equals(prefix) || "docx".equals(prefix)) {
+//                            fileType = Const.DOC_FILE;
+//                        } else if ("xls".equals(prefix) || "xlsx".equals(prefix)) {
+//                            fileType = Const.EXCEL_FILE;
+//                        } else {
+//                            fileType = Const.PIC_FILE;
+//                        }
+//                    }
+//                    String uniquenessName = new Date().getTime() + originalName;
+//                    String filePath = uploadPath + fileType + uniquenessName;
+//                    File newFile = new File(filePath);
+//                    sonFile.transferTo(newFile);
+//
+//                    // 存入表信息
+//                    FileInfo pictureInfo = new FileInfo();
+//                    pictureInfo.setFileName(sonFile.getOriginalFilename());
+//                    pictureInfo.setUrl(Const.DOMAIN + "/" + uniquenessName);
+//                    pictureInfo.setFileIntroduce(description);
+//
+//                    long size = sonFile.getSize();
+//                    DecimalFormat df = new DecimalFormat("#.00");
+//                    String fileSizeString = "";
+//                    if (size < 1024) {
+//                        fileSizeString = df.format((double) size) + "B";
+//                    } else if (size < 1048576) {
+//                        fileSizeString = df.format((double) size / 1024) + "K";
+//                    } else if (size < 1073741824) {
+//                        fileSizeString = df.format((double) size / 1048576) + "M";
+//                    } else {
+//                        fileSizeString = df.format((double) size / 1073741824) +"G";
+//                    }
+//                    pictureInfo.setSize(fileSizeString);
+//                    pictureInfo.setCreateAt(new Date());
+//                    pictureInfo.setUpdateAt(new Date());
+//                    pictureInfo.setPath(filePath);
+//                    result = fileInfoMapper.insert(pictureInfo);
+//                }
+//            }
+//        } catch (IOException e) {
+//            log.error(e.getMessage(),e);
+//        }
+        return result;
     }
 }

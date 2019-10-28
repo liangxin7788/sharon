@@ -6,7 +6,6 @@
         </layout>
     </appender>-->
 
-
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -18,7 +17,7 @@
     <!--配置info日志级别单独文件-->
     <appender name="FILE-info" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>/log/info/test_info_%d{yyyy-MM-dd}.log
+            <FileNamePattern>/var/log/info/sharon_info_%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -49,7 +48,7 @@
     <!--配置debug日志级别单独文件-->
     <appender name="FILE-debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>/log/debug/test_debug_%d{yyyy-MM-dd}.log
+            <FileNamePattern>/var/log/debug/sharon_debug_%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -84,7 +83,7 @@
     <!--配置error日志级别单独文件-->
     <appender name="FILE-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>/log/error/test_error_%d{yyyy-MM-dd}.log
+            <FileNamePattern>/var/log/error/sharon_error_%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -104,7 +103,7 @@
     <!--配置warn日志级别单独文件-->
     <appender name="FILE-warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>/log/warn/test_warn_%d{yyyy-MM-dd}.log
+            <FileNamePattern>/var/log/warn/sharon_warn_%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -139,5 +138,14 @@
         <appender-ref ref="FILE-error" />
         <appender-ref ref="FILE-warn" />
     </root>
+
+    <!-- sql打印控制，大于DEBUG就不会打印了 -->
+    <logger name="com.fun.business.sharon.biz.business.dao" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE-info" />
+        <appender-ref ref="FILE-debug" />
+        <appender-ref ref="FILE-error" />
+        <appender-ref ref="FILE-warn" />
+    </logger>
 
 </configuration>

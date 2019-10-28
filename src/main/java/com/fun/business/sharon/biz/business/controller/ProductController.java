@@ -1,19 +1,21 @@
 package com.fun.business.sharon.biz.business.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fun.business.sharon.biz.business.bean.Product;
+import com.fun.business.sharon.biz.business.service.ProductService;
+import com.fun.business.sharon.biz.business.vo.AddProductVo;
+import com.fun.business.sharon.biz.business.vo.ProductInfoSearchVo;
 import com.fun.business.sharon.biz.seckill.service.SeckillService;
 import com.fun.business.sharon.common.GlobalResult;
+import com.fun.business.sharon.utils.ObjectUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -29,7 +31,39 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     @Autowired
-    private SeckillService seckillService;
+    private ProductService productService;
+
+    @ApiOperation("获取产品信息列表")
+    @PostMapping("/getProductList")
+    public GlobalResult<?> getProductList(@RequestBody ProductInfoSearchVo vo){
+        IPage page = null;
+        if (ObjectUtil.isNotEmpty(vo)) {
+            page = productService.getProductList(vo);
+        }
+        return GlobalResult.newSuccess(page);
+    }
+
+    @ApiOperation("添加/编辑产品信息")
+    @PostMapping("/addOrEditProduct")
+    public GlobalResult<?> addOrEditProduct(@RequestBody AddProductVo productVo){
+        int result = 0;
+        if (ObjectUtil.isNotEmpty(productVo)) {
+            result = productService.addOrEditProduct(productVo);
+        }
+        return GlobalResult.newSuccess(result);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     @ApiOperation("测试秒杀")
     @GetMapping("/testSeckill")
@@ -37,6 +71,5 @@ public class ProductController {
 
         return GlobalResult.newSuccess();
     }
-
 
 }

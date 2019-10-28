@@ -1,23 +1,23 @@
 package com.fun.business.sharon.biz.business.bean;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author liangxin
- * @since 2019-07-01
+ * @since 2019-10-28
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -35,36 +35,49 @@ public class Product implements Serializable {
     private String name;
 
     /**
-     * 产品价格
-     */
-    private Double price;
-
-    /**
-     * 产品库存
-     */
-    private Integer stock;
-
-    /**
      * 备注信息
      */
-    private String remark;
+    private String description;
 
     /**
-     * 创建人id
+     * 规格
      */
-    private Integer createUserId;
+//    private String standard;
+
+    /**
+     * 型号
+     */
+    private String model;
+
+    /**
+     * 材质
+     */
+    private String material;
+
+    /**
+     * 应用领域
+     */
+    private String applyTo;
+
+    /**
+     * 应用领域
+     */
+    private String unitTag;
 
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createAt;
 
     /**
      * 更新时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateAt;
 
+    /**
+     * 数据库不做映射
+     */
+    @TableField(exist = false)
+    private ProductPicInfo productPicInfo;
 
 }

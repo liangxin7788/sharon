@@ -30,7 +30,7 @@ import java.util.List;
  */
 @RestController
 @Slf4j
-@RequestMapping("/pictureInfo")
+@RequestMapping("/fileInfo")
 @Api(description = "文件信息相关")
 public class FileInfoController {
 

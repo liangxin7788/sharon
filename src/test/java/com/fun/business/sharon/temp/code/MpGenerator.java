@@ -97,7 +97,7 @@ public class MpGenerator {
 		mpg.setStrategy(strategy);
 		mpg.setTemplateEngine(new FreemarkerTemplateEngine());
 		mpg.execute();
-
+		System.out.println("代码生成完成！");
 	}
 
 

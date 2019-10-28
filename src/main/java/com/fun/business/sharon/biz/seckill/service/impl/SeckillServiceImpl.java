@@ -30,31 +30,31 @@ public class SeckillServiceImpl implements SeckillService {
     @Autowired
     private OrderMapper orderMapper;
 
-    @Override
-    @Transactional
-    public Product seckill(Integer id) throws RuntimeException {
-        //加锁
-        long time = System.currentTimeMillis() + 1000*10;  //超时时间：10秒，最好设为常量
-
-        boolean isLock = redisLock.lock(String.valueOf(id), String.valueOf(time));
-        if(!isLock){
-            throw new RuntimeException("人太多了，换个姿势再试试~");
-        }
-        //查库存
-        Product product = productMapper.selectById(id);
-        if(product.getStock()==0) throw new RuntimeException("已经卖光");
-        //写入订单表
-        Order order=new Order();
-        order.setProductId(product.getId());
-        order.setProductName(product.getName());
-        orderMapper.insert(order);
-        //减库存
-        product.setPrice(null);
-        product.setName(null);
-        product.setStock(product.getStock()-1);
-        productMapper.updateById(product);
-        //解锁
-        redisLock.unlock(String.valueOf(id),String.valueOf(time));
-        return product;
-    }
+//    @Override
+//    @Transactional
+//    public Product seckill(Integer id) throws RuntimeException {
+//        //加锁
+//        long time = System.currentTimeMillis() + 1000*10;  //超时时间：10秒，最好设为常量
+//
+//        boolean isLock = redisLock.lock(String.valueOf(id), String.valueOf(time));
+//        if(!isLock){
+//            throw new RuntimeException("人太多了，换个姿势再试试~");
+//        }
+//        //查库存
+//        Product product = productMapper.selectById(id);
+//        if(product.getStock()==0) throw new RuntimeException("已经卖光");
+//        //写入订单表
+//        Order order=new Order();
+//        order.setProductId(product.getId());
+//        order.setProductName(product.getName());
+//        orderMapper.insert(order);
+//        //减库存
+//        product.setPrice(null);
+//        product.setName(null);
+//        product.setStock(product.getStock()-1);
+//        productMapper.updateById(product);
+//        //解锁
+//        redisLock.unlock(String.valueOf(id),String.valueOf(time));
+//        return product;
+//    }
 }
