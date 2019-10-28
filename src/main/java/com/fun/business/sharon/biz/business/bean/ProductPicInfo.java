@@ -32,12 +32,12 @@ public class ProductPicInfo implements Serializable {
     private Integer productId;
 
     /**
-     * 主图
+     * 是否是主图；1-是，0-否
      */
-    private String firstImage;
+    private Integer isFirstImage;
 
     /**
-     * 其他副图
+     * 图片url
      */
     private String referenceImage;
 

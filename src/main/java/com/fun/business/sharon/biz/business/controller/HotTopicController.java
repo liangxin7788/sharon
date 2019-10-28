@@ -1,24 +1,5 @@
 package com.fun.business.sharon.biz.business.controller;
 
-
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import io.swagger.annotations.Api;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
-import com.alibaba.fastjson.JSON;
 import com.fun.business.sharon.biz.business.bean.HotTopic;
 import com.fun.business.sharon.biz.business.bean.news.EHtml;
 import com.fun.business.sharon.biz.business.bean.news.EHtmlList;
@@ -27,9 +8,22 @@ import com.fun.business.sharon.common.GlobalResult;
 import com.fun.business.sharon.common.OperateException;
 import com.fun.business.sharon.utils.ObjectUtil;
 import com.fun.business.sharon.utils.StringUtil;
-
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <p>

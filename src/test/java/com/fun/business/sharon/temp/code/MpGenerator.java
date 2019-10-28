@@ -80,7 +80,7 @@ public class MpGenerator {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				// 自定义输入文件名称
-				return rb.getString("OutputDirXml") + "/mapper/" + tableInfo.getEntityName() + StringPool.DOT_XML;
+				return rb.getString("OutputDirXml") + tableInfo.getEntityName() + StringPool.DOT_XML;
 			}
 		});
 
