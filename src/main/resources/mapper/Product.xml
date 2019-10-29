@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fun.business.sharon.biz.business.dao.ProductMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.fun.business.sharon.biz.business.bean.Product">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="description" property="description" />
+        <result column="model" property="model" />
+        <result column="material" property="material" />
+        <result column="apply_to" property="applyTo" />
+        <result column="unit_tag" property="unitTag" />
+        <result column="create_at" property="createAt" />
+        <result column="update_at" property="updateAt" />
+        <association property="productPicInfo" javaType="com.fun.business.sharon.biz.business.bean.ProductPicInfo">
+            <id property="id" column="p_id"/>
+            <result property="productId" column="p_product_id"/>
+            <result property="firstImage" column="p_first_image"/>
+            <result property="referenceImage" column="p_reference_image"/>
+        </association>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, description, model, material, apply_to, create_at, update_at, unit_tag
+    </sql>
+    
+    <select id="getProductListCount" resultType="int">
+        select count(1)
+        from product p
+        left join product_pic_info ppi on p.id = ppi.product_id
+        <where>
+            1=1
+            <if test="vo.createAt != null">
+                and p.create_at &gt;=#{vo.createAt}
+            </if>
+            <if test="vo.createEnd != null">
+                and p.create_at &lt;=#{vo.createEnd}
+            </if>
+            <if test="vo.productName != null and vo.productName != ''">
+                and p.name like concat ('%', #{vo.productName}, '%')
+            </if>
+            <if test="vo.productDescription != null and vo.productDescription != ''">
+                and p.description like concat ('%', #{vo.productDescription}, '%')
+            </if>
+            <if test="vo.materials != null and vo.materials.size > 0">
+                and p.material in
+                <foreach collection="vo.materials" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="getProductList" resultMap="BaseResultMap">
+        select p.*,ppi.id p_id, ppi.product_id p_product_id, ppi.first_image p_first_image, ppi.reference_image p_reference_image
+        from product p
+        left join product_pic_info ppi on p.id = ppi.product_id
+        <where>
+            1=1
+            <if test="vo.createAt != null">
+                and p.create_at &gt;=#{vo.createAt}
+            </if>
+            <if test="vo.createEnd != null">
+                and p.create_at &lt;=#{vo.createEnd}
+            </if>
+            <if test="vo.productName != null and vo.productName != ''">
+                and p.name like concat ('%', #{vo.productName}, '%')
+            </if>
+            <if test="vo.productDescription != null and vo.productDescription != ''">
+                and p.description like concat ('%', #{vo.productDescription}, '%')
+            </if>
+            <if test="vo.materials != null">
+                and p.material in
+                <foreach collection="vo.materials" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+</mapper>
