@@ -53,9 +53,11 @@ public class ProductController {
         return GlobalResult.newSuccess(result);
     }
 
-
-
-
+    @ApiOperation("停售某个产品")
+    @DeleteMapping("/delProduct")
+    public GlobalResult<?> delProduct(@RequestParam(value = "productId", required = true)Integer productId){
+        return GlobalResult.newSuccess(productService.delProduct(productId));
+    }
 
 
 

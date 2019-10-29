@@ -21,4 +21,5 @@ public interface ProductService extends IService<Product> {
 
     int addOrEditProduct(AddProductVo productVo);
 
+    Integer delProduct(Integer productId);
 }

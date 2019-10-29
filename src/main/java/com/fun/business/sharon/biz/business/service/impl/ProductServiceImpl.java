@@ -111,6 +111,17 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         return result;
     }
 
+    @Override
+    public Integer delProduct(Integer productId) {
+        Product product = productMapper.selectById(productId);
+        if (ObjectUtil.isNotEmpty(product)) {
+            log.info("产品信息被设置为停售产品：" + product.getName());
+            product.setStatus(0);
+            return productMapper.updateById(product);
+        }
+        return 0;
+    }
+
     private void uploadFile(MultipartFile[] file, Integer id) {
         try {
             if (ObjectUtil.isNotEmpty(file)) {
@@ -133,16 +144,16 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
                     sonFile.transferTo(newFile);
 
                     // 存入表信息
-                    if (ObjectUtil.isNotEmpty(id)) {
-                        ProductPicInfo productPicInfo = productPicInfoMapper.selectOne(new QueryWrapper<ProductPicInfo>().eq("product_id", id));
-                        productPicInfo.setFirstImage(Const.DOMAIN + "/" + uniquenessName);
-                        productPicInfoMapper.updateById(productPicInfo);
-                    }else {
-                        ProductPicInfo productPicInfo = new ProductPicInfo();
-                        productPicInfo.setFirstImage(Const.DOMAIN + "/" + uniquenessName);
-                        productPicInfo.setProductId(id);
-                        productPicInfoMapper.insert(productPicInfo);
-                    }
+//                    if (ObjectUtil.isNotEmpty(id)) {
+//                        ProductPicInfo productPicInfo = productPicInfoMapper.selectOne(new QueryWrapper<ProductPicInfo>().eq("product_id", id));
+//                        productPicInfo.setFirstImage(Const.DOMAIN + "/" + uniquenessName);
+//                        productPicInfoMapper.updateById(productPicInfo);
+//                    }else {
+//                        ProductPicInfo productPicInfo = new ProductPicInfo();
+//                        productPicInfo.setFirstImage(Const.DOMAIN + "/" + uniquenessName);
+//                        productPicInfo.setProductId(id);
+//                        productPicInfoMapper.insert(productPicInfo);
+//                    }
                 }
             }
         } catch (IOException e) {

@@ -40,9 +40,9 @@ public class Product implements Serializable {
     private String description;
 
     /**
-     * 规格
+     * 状态
      */
-//    private String standard;
+    private Integer status;
 
     /**
      * 型号
@@ -60,7 +60,7 @@ public class Product implements Serializable {
     private String applyTo;
 
     /**
-     * 应用领域
+     * 系统中唯一标识字段
      */
     private String unitTag;
 
