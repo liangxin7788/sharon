@@ -47,11 +47,6 @@ public class AddProductVo {
     /**
      * 主图
      */
-    private MultipartFile[] firstImage;
-
-    /**
-     * 关联图
-     */
-    private MultipartFile[] referenceImages;
+    private MultipartFile[] images;
 
 }

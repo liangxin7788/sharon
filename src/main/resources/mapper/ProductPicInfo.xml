@@ -6,13 +6,14 @@
     <resultMap id="BaseResultMap" type="com.fun.business.sharon.biz.business.bean.ProductPicInfo">
         <id column="id" property="id" />
         <result column="product_id" property="productId" />
-        <result column="first_image" property="firstImage" />
-        <result column="reference_image" property="referenceImage" />
+        <result column="is_first_image" property="isFirstImage" />
+        <result column="folder_path" property="folderPath" />
+        <result column="image_url" property="imageUrl" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, product_id, first_image, reference_image
+        id, product_id, is_first_image, folder_path, image_url
     </sql>
 
 </mapper>

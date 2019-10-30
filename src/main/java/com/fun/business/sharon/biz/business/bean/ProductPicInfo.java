@@ -32,6 +32,11 @@ public class ProductPicInfo implements Serializable {
     private Integer productId;
 
     /**
+     * 所在文件夹
+     */
+    private String folderPath;
+
+    /**
      * 是否是主图；1-是，0-否
      */
     private Integer isFirstImage;
@@ -39,7 +44,7 @@ public class ProductPicInfo implements Serializable {
     /**
      * 图片url
      */
-    private String referenceImage;
+    private String imageUrl;
 
 
 }

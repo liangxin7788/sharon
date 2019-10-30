@@ -83,18 +83,14 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
                 insertOrUpdateProductInfo(product, productVo);
                 result = productMapper.updateById(product);
                 // 更新图片表 productPicInfoMapper
-                if (ObjectUtil.isNotEmpty(productVo.getFirstImage()) || ObjectUtil.isNotEmpty(productVo.getReferenceImages())) {
-                    ProductPicInfo productPicInfo = productPicInfoMapper.selectOne(new QueryWrapper<ProductPicInfo>().eq("product_id", product.getId()));
-                    if (ObjectUtil.isNotEmpty(productPicInfo)) {
-                        if (ObjectUtil.isNotEmpty(productVo.getFirstImage())) {
-                            uploadFile(productVo.getFirstImage(), productVo.getId());
-                        }else {
-
-                        }
-                    }else {
-
-                    }
-                }
+//                if (ObjectUtil.isNotEmpty(productVo.getImages())) {
+//                    List<ProductPicInfo> productPicInfos = productPicInfoMapper.selectList(new QueryWrapper<ProductPicInfo>().eq("product_id", product.getId()));
+//                    if (ObjectUtil.isNotEmpty(productPicInfos)) {
+//
+//                    }else {
+//
+//                    }
+//                }
             }
         }else { // 新增
             Product product = new Product();
@@ -105,9 +101,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             insertOrUpdateProductInfo(product, productVo);
             result = productMapper.insert(product);
             // 插入图片表
-
+            uploadFile(productVo.getImages(), uuid);
         }
-
         return result;
     }
 
@@ -122,7 +117,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         return 0;
     }
 
-    private void uploadFile(MultipartFile[] file, Integer id) {
+    private void uploadFile(MultipartFile[] file, String folderPath) {
         try {
             if (ObjectUtil.isNotEmpty(file)) {
                 for (MultipartFile sonFile : file) {
@@ -139,21 +134,10 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
                         }
                     }
                     String uniquenessName = new Date().getTime() + originalName;
-                    String filePath = uploadPath + fileType + uniquenessName;
+                    String filePath = uploadPath + fileType + folderPath + "/" + uniquenessName;
                     File newFile = new File(filePath);
                     sonFile.transferTo(newFile);
 
-                    // 存入表信息
-//                    if (ObjectUtil.isNotEmpty(id)) {
-//                        ProductPicInfo productPicInfo = productPicInfoMapper.selectOne(new QueryWrapper<ProductPicInfo>().eq("product_id", id));
-//                        productPicInfo.setFirstImage(Const.DOMAIN + "/" + uniquenessName);
-//                        productPicInfoMapper.updateById(productPicInfo);
-//                    }else {
-//                        ProductPicInfo productPicInfo = new ProductPicInfo();
-//                        productPicInfo.setFirstImage(Const.DOMAIN + "/" + uniquenessName);
-//                        productPicInfo.setProductId(id);
-//                        productPicInfoMapper.insert(productPicInfo);
-//                    }
                 }
             }
         } catch (IOException e) {
