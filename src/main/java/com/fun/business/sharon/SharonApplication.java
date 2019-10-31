@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
  * 项目启动入口
  *
  */
-@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
+@SpringBootApplication(scanBasePackages = { "com.fun.business.sharon" }, exclude= {DataSourceAutoConfiguration.class})
 @MapperScan("com.fun.business.sharon.biz.*.dao")
 public class SharonApplication {
 	public static void main(String[] args) {

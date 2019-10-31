@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fun.business.sharon.biz.business.dao.CustomerMassageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.fun.business.sharon.biz.business.bean.CustomerMassage">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="come_from" property="comeFrom" />
+        <result column="massage" property="massage" />
+        <result column="phone_number" property="phoneNumber" />
+        <result column="customer_email" property="customerEmail" />
+        <result column="create_at" property="createAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, come_from, massage, phone_number, customer_email, create_at
+    </sql>
+
+    <select id="getMassageListCount" resultType="int">
+        select count(1)
+        from customer_massage
+        <where>
+            1 = 1
+            <if test="vo.startTime != null">
+                and create_at &gt;= #{vo.startTime}
+            </if>
+            <if test="vo.endTime != null">
+                and create_at &lt;= #{vo.endTime}
+            </if>
+            <if test="vo.country != null and vo.country != ''">
+                and come_from like concat('%', #{vo.country}, '%')
+            </if>
+            <if test="vo.name != null and vo.name != ''">
+                and name like concat('%', #{vo.name}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getMassageList" resultType="com.fun.business.sharon.biz.business.bean.CustomerMassage">
+        select *
+        from customer_massage
+        <where>
+            1 = 1
+            <if test="vo.startTime != null">
+                and create_at &gt;= #{vo.startTime}
+            </if>
+            <if test="vo.endTime != null">
+                and create_at &lt;= #{vo.endTime}
+            </if>
+            <if test="vo.country != null and vo.country != ''">
+                and come_from like concat('%', #{vo.country}, '%')
+            </if>
+            <if test="vo.name != null and vo.name != ''">
+                and name like concat('%', #{vo.name}, '%')
+            </if>
+        </where>
+        order by create_at desc
+        limit #{offset}, #{pageSize}
+    </select>
+
+</mapper>

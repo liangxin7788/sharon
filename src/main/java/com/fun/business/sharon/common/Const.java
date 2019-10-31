@@ -31,4 +31,14 @@ public class Const {
 	 */
 	public static final String PIC_FILE = "picture/";
 
+	/**
+	 * sharon邮箱地址
+	 */
+	public static final String SHARON_EMAIL = "Sharon.loo@outlook.com";
+
+	/**
+	 * sharon邮箱地址
+	 */
+	public static final String LX_EMAIL = "lx_4509@163.com";
+
 }
