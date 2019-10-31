@@ -7,13 +7,23 @@
         <id column="id" property="id" />
         <result column="product_id" property="productId" />
         <result column="is_first_image" property="isFirstImage" />
-        <result column="folder_path" property="folderPath" />
+        <result column="create_at" property="createAt" />
         <result column="image_url" property="imageUrl" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, product_id, is_first_image, folder_path, image_url
+        id, product_id, is_first_image, create_at, image_url
     </sql>
+
+    <!-- 自定义查询结果列 -->
+    <sql id="selectInfo">
+        id, is_first_image, image_url
+    </sql>
+
+    <select id="selectProductPicInfoByProductId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from product_pic_info
+        where product_id = #{id}
+    </select>
 
 </mapper>

@@ -7,6 +7,8 @@ import com.fun.business.sharon.biz.business.vo.AddProductVo;
 import com.fun.business.sharon.biz.business.vo.ProductInfoSearchVo;
 import com.fun.business.sharon.common.GlobalResult;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -21,5 +23,5 @@ public interface ProductService extends IService<Product> {
 
     int addOrEditProduct(AddProductVo productVo);
 
-    Integer delProduct(Integer productId);
+    Integer delProduct(List<Integer> productIds);
 }

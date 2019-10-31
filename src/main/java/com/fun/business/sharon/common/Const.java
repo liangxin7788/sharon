@@ -14,7 +14,7 @@ public class Const {
 	/**
 	 * 个人服务器域名
 	 */
-	public static final String DOMAIN = "http://liangxin.fun";
+	public static final String DOMAIN = "http://liangxin.fun/";
 
 	/**
 	 * Excel文件

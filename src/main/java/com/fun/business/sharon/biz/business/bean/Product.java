@@ -3,9 +3,9 @@ package com.fun.business.sharon.biz.business.bean;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -78,6 +78,6 @@ public class Product implements Serializable {
      * 数据库不做映射
      */
     @TableField(exist = false)
-    private ProductPicInfo productPicInfo;
+    private List<ProductPicInfo> productPicInfos;
 
 }

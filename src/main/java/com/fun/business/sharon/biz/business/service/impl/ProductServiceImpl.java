@@ -82,15 +82,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             if (ObjectUtil.isNotEmpty(product)) {
                 insertOrUpdateProductInfo(product, productVo);
                 result = productMapper.updateById(product);
-                // 更新图片表 productPicInfoMapper
-//                if (ObjectUtil.isNotEmpty(productVo.getImages())) {
-//                    List<ProductPicInfo> productPicInfos = productPicInfoMapper.selectList(new QueryWrapper<ProductPicInfo>().eq("product_id", product.getId()));
-//                    if (ObjectUtil.isNotEmpty(productPicInfos)) {
-//
-//                    }else {
-//
-//                    }
-//                }
             }
         }else { // 新增
             Product product = new Product();
@@ -101,23 +92,27 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             insertOrUpdateProductInfo(product, productVo);
             result = productMapper.insert(product);
             // 插入图片表
-            uploadFile(productVo.getImages(), uuid);
+            uploadFile(productVo.getImages(), product.getId());
         }
         return result;
     }
 
     @Override
-    public Integer delProduct(Integer productId) {
-        Product product = productMapper.selectById(productId);
-        if (ObjectUtil.isNotEmpty(product)) {
-            log.info("产品信息被设置为停售产品：" + product.getName());
-            product.setStatus(0);
-            return productMapper.updateById(product);
+    @Transactional
+    public Integer delProduct(List<Integer> productIds) {
+        List<Product> products = productMapper.selectList(new QueryWrapper<Product>().in("id", productIds));
+        if (ObjectUtil.isNotEmpty(products)) {
+            products.forEach(product ->{
+                log.info("产品信息被设置为停售产品：" + product.getName() + " 时间：" + new Date());
+                product.setStatus(0);
+                productMapper.updateById(product);
+            });
+            return 1;
         }
         return 0;
     }
 
-    private void uploadFile(MultipartFile[] file, String folderPath) {
+    private void uploadFile(MultipartFile[] file, Integer productId) {
         try {
             if (ObjectUtil.isNotEmpty(file)) {
                 for (MultipartFile sonFile : file) {
@@ -134,17 +129,29 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
                         }
                     }
                     String uniquenessName = new Date().getTime() + originalName;
-                    String filePath = uploadPath + fileType + folderPath + "/" + uniquenessName;
+                    String filePath = uploadPath + fileType + "/" + uniquenessName;
                     File newFile = new File(filePath);
+                    //如果文件的目录不存在则创建目录
+                    if(!newFile.getParentFile().exists()){
+                        newFile.getParentFile().mkdirs();
+                    }
                     sonFile.transferTo(newFile);
-
+                    // 插入照片表 DOMAIN
+                    ProductPicInfo productPicInfo = new ProductPicInfo();
+                    productPicInfo.setProductId(productId);
+                    productPicInfo.setImageUrl(Const.DOMAIN + uniquenessName);
+                    // 包含 - 则认为是主图，非主图数据库有默认
+                    if (uniquenessName.contains("-")) {
+                        productPicInfo.setIsFirstImage(1);
+                    }
+                    productPicInfo.setCreateAt(new Date());
+                    productPicInfoMapper.insert(productPicInfo);
                 }
             }
         } catch (IOException e) {
             log.error(e.getMessage(),e);
             throw new OperateException("图片上传失败！");
         }
-
 
     }
 

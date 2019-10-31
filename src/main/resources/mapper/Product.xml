@@ -13,12 +13,26 @@
         <result column="unit_tag" property="unitTag" />
         <result column="create_at" property="createAt" />
         <result column="update_at" property="updateAt" />
-        <association property="productPicInfo" javaType="com.fun.business.sharon.biz.business.bean.ProductPicInfo">
+        <!-- 一对一关系配置 -->
+        <!--<association property="productPicInfo" javaType="com.fun.business.sharon.biz.business.bean.ProductPicInfo">
             <id property="id" column="p_id"/>
             <result property="productId" column="p_product_id"/>
-            <result property="firstImage" column="p_first_image"/>
-            <result property="referenceImage" column="p_reference_image"/>
-        </association>
+            <result property="isFirstImage" column="p_is_first_image"/>
+            <result property="createAt" column="p_create_at"/>
+            <result property="imageUrl" column="p_image_url"/>
+        </association>-->
+        <!-- 一对多，普通配置 -->
+        <!--<collection property="productPicInfos" ofType="com.fun.business.sharon.biz.business.bean.ProductPicInfo">
+            <id property="id" column="p_id"/>
+            <result property="productId" column="p_product_id"/>
+            <result property="isFirstImage" column="p_is_first_image"/>
+            <result property="createAt" column="p_create_at"/>
+            <result property="imageUrl" column="p_image_url"/>
+        </collection>-->
+        <!-- 业务需求，这种比较合适，sql打印可知这种是子查询，不再需要left join -->
+        <collection property="productPicInfos" ofType="com.fun.business.sharon.biz.business.bean.ProductPicInfo" column="id"
+        select="com.fun.business.sharon.biz.business.dao.ProductPicInfoMapper.selectProductPicInfoByProductId">
+        </collection>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -29,7 +43,6 @@
     <select id="getProductListCount" resultType="int">
         select count(1)
         from product p
-        left join product_pic_info ppi on p.id = ppi.product_id
         <where>
             1=1
             <if test="vo.createAt != null">
@@ -54,9 +67,8 @@
     </select>
 
     <select id="getProductList" resultMap="BaseResultMap">
-        select p.*,ppi.id p_id, ppi.product_id p_product_id, ppi.first_image p_first_image, ppi.reference_image p_reference_image
+        select p.*
         from product p
-        left join product_pic_info ppi on p.id = ppi.product_id
         <where>
             1=1
             <if test="vo.createAt != null">

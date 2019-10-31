@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -32,9 +33,9 @@ public class ProductPicInfo implements Serializable {
     private Integer productId;
 
     /**
-     * 所在文件夹
+     * 创建时间
      */
-    private String folderPath;
+    private Date createAt;
 
     /**
      * 是否是主图；1-是，0-否

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+
 /**
  * <p>
  *  前端控制器
@@ -36,7 +38,7 @@ public class ProductController {
     @ApiOperation("获取产品信息列表")
     @PostMapping("/getProductList")
     public GlobalResult<?> getProductList(@RequestBody ProductInfoSearchVo vo){
-        IPage page = null;
+        IPage<Product> page = null;
         if (ObjectUtil.isNotEmpty(vo)) {
             page = productService.getProductList(vo);
         }
@@ -45,7 +47,7 @@ public class ProductController {
 
     @ApiOperation("添加/编辑产品信息")
     @PostMapping("/addOrEditProduct")
-    public GlobalResult<?> addOrEditProduct(@RequestBody AddProductVo productVo){
+    public GlobalResult<?> addOrEditProduct(AddProductVo productVo){
         int result = 0;
         if (ObjectUtil.isNotEmpty(productVo)) {
             result = productService.addOrEditProduct(productVo);
@@ -53,10 +55,10 @@ public class ProductController {
         return GlobalResult.newSuccess(result);
     }
 
-    @ApiOperation("停售某个产品")
+    @ApiOperation("停售某些产品")
     @DeleteMapping("/delProduct")
-    public GlobalResult<?> delProduct(@RequestParam(value = "productId", required = true)Integer productId){
-        return GlobalResult.newSuccess(productService.delProduct(productId));
+    public GlobalResult<?> delProduct(@RequestParam(value = "productIds") List<Integer> productIds){
+        return GlobalResult.newSuccess(productService.delProduct(productIds));
     }
 
 

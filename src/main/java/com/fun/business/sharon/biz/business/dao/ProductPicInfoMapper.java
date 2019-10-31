@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fun.business.sharon.biz.business.bean.ProductPicInfo;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -15,5 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ProductPicInfoMapper extends BaseMapper<ProductPicInfo> {
+
+    List<ProductPicInfo> selectProductPicInfoByProductId(Integer id);
 
 }
