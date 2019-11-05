@@ -5,10 +5,6 @@ server:
   port: 9080
 
 spring:
-  mvc:
-    view:
-      prefix: /WEB-INF/jsp/
-      suffix: .jsp
   datasource:
     sharon:
       url: jdbc:mysql://59.110.224.230:3306/sharon?allowMultiQueries=true
@@ -32,6 +28,14 @@ spring:
       max-open-prepared-statements: 20
       remove-abandoned-timeout: 5000
       max-pool-prepared-statement-per-connection-size: 300
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 合并多个DruidDataSource的监控数据
+      useGlobalDataSourceStat: true
     pms:
       url: jdbc:mariadb://192.168.3.86:3306/pms?allowMultiQueries=true
       type: com.alibaba.druid.pool.DruidDataSource
@@ -53,6 +57,14 @@ spring:
       max-open-prepared-statements: 20
       remove-abandoned-timeout: 5000
       max-pool-prepared-statement-per-connection-size: 300
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 合并多个DruidDataSource的监控数据
+      useGlobalDataSourceStat: true
   sleuth:
     sampler:
       probability: 1.0

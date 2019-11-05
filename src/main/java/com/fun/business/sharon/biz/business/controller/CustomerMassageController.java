@@ -8,6 +8,7 @@ import com.fun.business.sharon.biz.business.vo.AddMassageVo;
 import com.fun.business.sharon.biz.business.vo.MassageSearchVo;
 import com.fun.business.sharon.common.GlobalResult;
 import com.fun.business.sharon.utils.CheckParamUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-10-31
  */
 @RestController
+@Api(description = "客户留言墙")
 @RequestMapping("/customerMassage")
 public class CustomerMassageController {
 
