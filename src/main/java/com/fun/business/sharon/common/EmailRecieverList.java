@@ -21,8 +21,8 @@ public class EmailRecieverList implements Serializable {
 
     public EmailRecieverList() {
         toMail = new ArrayList<>();
-        toMail.add("Sharon.loo@outlook.com");
-        toMail.add("lx_4509@163.com");
+//        toMail.add("Sharon.loo@outlook.com");
+        toMail.add("lx__job@163.com");
     }
 
 }

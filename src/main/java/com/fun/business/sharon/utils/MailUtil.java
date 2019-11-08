@@ -72,8 +72,15 @@ public class MailUtil {
 
         // 邮件主题
         message.setSubject(subject);
-        // 邮件正文
-        message.setContent(JSON.toJSONString(sendMailVo), "text/html;charset=utf-8");
+        // 邮件正文处理
+        String comeFrom = sendMailVo.getComeFrom();
+        String company = sendMailVo.getCompany();
+        String customerEmail = sendMailVo.getCustomerEmail();
+        String massage = sendMailVo.getMassage();
+        String name = sendMailVo.getName();
+        String phoneNumber = sendMailVo.getPhoneNumber();
+
+        message.setContent("收到客户 " + name + " 邮件，他来自：" + comeFrom + " 公司名：" + company + " 留言内容：" + massage + " 客户邮箱：" + customerEmail + " 电话号码：" + phoneNumber, "text/html;charset=utf-8");
 
         // 设置显示的发件时间
         message.setSentDate(new Date());

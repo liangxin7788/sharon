@@ -36,6 +36,7 @@ spring:
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
       # 合并多个DruidDataSource的监控数据
       useGlobalDataSourceStat: true
+
     pms:
       url: jdbc:mariadb://192.168.3.86:3306/pms?allowMultiQueries=true
       type: com.alibaba.druid.pool.DruidDataSource
