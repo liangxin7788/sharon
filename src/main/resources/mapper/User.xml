@@ -20,4 +20,28 @@
         id, user_name, password, email, address, create_user, description, create_at, update_at
     </sql>
 
+    <select id="getUserListCount" resultType="int">
+        select count(1)
+        from user
+        <where>
+            1 = 1
+            <if test="vo.userName != null and vo.userName != ''">
+                and user_name like concat('%', #{vo.userName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getUserList" resultType="com.fun.business.sharon.biz.business.bean.User">
+        select *
+        from user
+        <where>
+            1 = 1
+            <if test="vo.userName != null and vo.userName != ''">
+                and user_name like concat('%', #{vo.userName}, '%')
+            </if>
+        </where>
+        order by create_at desc
+        limit #{offset}, #{pageSize}
+    </select>
+
 </mapper>

@@ -1,7 +1,9 @@
 package com.fun.business.sharon.biz.business.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fun.business.sharon.biz.business.bean.User;
+import com.fun.business.sharon.biz.business.vo.UserVo;
 
 /**
  * <p>
@@ -14,4 +16,8 @@ import com.fun.business.sharon.biz.business.bean.User;
 public interface UserService extends IService<User> {
 
     User findByUserName(String userName);
+
+    IPage<User> getUserList(UserVo vo);
+
+    Boolean judgeUser(String userName, String passWord);
 }

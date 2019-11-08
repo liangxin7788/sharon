@@ -1,5 +1,8 @@
 package com.fun.business.sharon.biz.business.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fun.business.sharon.biz.business.vo.UserVo;
 import com.fun.business.sharon.utils.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +11,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fun.business.sharon.biz.business.bean.User;
 import com.fun.business.sharon.biz.business.dao.UserMapper;
 import com.fun.business.sharon.biz.business.service.UserService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -25,10 +30,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public User findByUserName(String userName) {
-        User findByUserName = userMapper.findByUserName(userName);
-        if (ObjectUtil.isNotEmpty(findByUserName)) {
-            return findByUserName;
-        }
+        return userMapper.findByUserName(userName);
+    }
+
+    @Override
+    public IPage<User> getUserList(UserVo vo) {
+        int pageIndex = vo.getPageIndex();
+        int pageSize = vo.getPageSize();
+        pageIndex = pageIndex == 0?1:pageIndex;
+        pageSize = pageSize == 0?10:pageSize;
+        int offset = (pageIndex - 1) * pageSize;
+        Page<User> page = new Page<>(pageIndex, pageSize);
+        int total = userMapper.getUserListCount(vo);
+        List<User> list = userMapper.getUserList(vo, offset, pageSize);
+
         return null;
+    }
+
+    @Override
+    public Boolean judgeUser(String userName, String passWord) {
+        User user = findByUserName(userName);
+        if (null != user) {
+            return user.getPassword().equals(passWord);
+        }
+        return false;
     }
 }

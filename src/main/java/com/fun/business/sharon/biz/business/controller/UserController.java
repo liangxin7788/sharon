@@ -1,11 +1,23 @@
 package com.fun.business.sharon.biz.business.controller;
 
 
+import com.alibaba.fastjson.JSON;
+import com.fun.business.sharon.biz.business.bean.User;
 import com.fun.business.sharon.biz.business.service.UserService;
+import com.fun.business.sharon.biz.business.vo.UserVo;
+import com.fun.business.sharon.common.GlobalResult;
+import com.fun.business.sharon.utils.CheckParamUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.Date;
 
 /**
  * <p>
@@ -18,10 +30,42 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/user")
+@Api(description = "用户相关接口")
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @ApiOperation("添加用户")
+    @PostMapping("/addUser")
+    public GlobalResult<?> addUser(@RequestBody User user) throws NoSuchAlgorithmException {
+        CheckParamUtil.checkParamForCommit(user, new String[]{"userName", "password", "description"});
+        log.info("添加用户：" + JSON.toJSONString(user) + new Date());
+        User newUser = new User();
+        String password = user.getPassword();
+
+        MessageDigest md = MessageDigest.getInstance("md5");
+        byte[] bytes = md.digest(password.getBytes());
+        String savePwd = Base64.getEncoder().encodeToString(bytes);
+
+        newUser.setPassword(savePwd);
+        newUser.setCreateAt(new Date());
+        newUser.setUpdateAt(new Date());
+        BeanUtils.copyProperties(user, newUser);
+        return GlobalResult.newSuccess(userService.save(newUser));
+    }
+
+    @ApiOperation("获取用户")
+    @GetMapping("/getUserList")
+    public GlobalResult<?> getUserList(@RequestBody UserVo vo){
+        return GlobalResult.newSuccess(userService.getUserList(vo));
+    }
+
+    @ApiOperation("进入管理界面的校验，true才能进入")
+    @GetMapping("/judgeUser")
+    public GlobalResult<?> judgeUser(@RequestParam(value = "userName", required = true) String userName, @RequestParam(value = "passWord", required = true) String passWord){
+        return GlobalResult.newSuccess(userService.judgeUser(userName, passWord));
+    }
 
 //    @ApiOperation("测试mq")
 //    @GetMapping("/testMq")
