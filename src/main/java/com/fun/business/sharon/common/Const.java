@@ -41,4 +41,9 @@ public class Const {
 	 */
 	public static final String LX_EMAIL = "lx_4509@163.com";
 
+	/**
+	 * sharon邮箱地址
+	 */
+	public static final String PROJECT_NAME = "SHARON";
+
 }

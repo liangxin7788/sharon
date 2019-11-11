@@ -5,12 +5,14 @@ import com.alibaba.fastjson.JSON;
 import com.fun.business.sharon.biz.business.bean.User;
 import com.fun.business.sharon.biz.business.service.UserService;
 import com.fun.business.sharon.biz.business.vo.UserVo;
+import com.fun.business.sharon.common.Const;
 import com.fun.business.sharon.common.GlobalResult;
 import com.fun.business.sharon.common.OperateException;
 import com.fun.business.sharon.utils.CheckParamUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * <p>
@@ -39,7 +42,7 @@ public class UserController {
 
     @ApiOperation("添加用户")
     @PostMapping("/addUser")
-    public GlobalResult<?> addUser(@RequestBody User user) throws NoSuchAlgorithmException {
+    public GlobalResult<?> addUser(@RequestBody User user) {
         CheckParamUtil.checkParamForCommit(user, new String[]{"userName", "password", "description"});
         log.info("添加用户：" + JSON.toJSONString(user) + new Date());
         // 系统不允许同名用户存在
@@ -51,20 +54,22 @@ public class UserController {
 
         User newUser = new User();
         String password = user.getPassword();
+        if (password.length() > 18 || password.length() < 6) {
+            throw new OperateException("用户密码长度必须符合 6 至 18 位！");
+        }
+        // md5Hex加密
+        String savePwd = DigestUtils.md5Hex(password + Const.PROJECT_NAME);
 
-        MessageDigest md = MessageDigest.getInstance("md5");
-        byte[] bytes = md.digest(password.getBytes());
-        String savePwd = Base64.getEncoder().encodeToString(bytes);
-
-        newUser.setPassword(savePwd);
         newUser.setCreateAt(new Date());
         newUser.setUpdateAt(new Date());
         BeanUtils.copyProperties(user, newUser);
+
+        newUser.setPassword(savePwd);
         return GlobalResult.newSuccess(userService.save(newUser));
     }
 
     @ApiOperation("获取用户")
-    @GetMapping("/getUserList")
+    @PostMapping("/getUserList")
     public GlobalResult<?> getUserList(@RequestBody UserVo vo){
         return GlobalResult.newSuccess(userService.getUserList(vo));
     }
@@ -72,7 +77,7 @@ public class UserController {
     @ApiOperation("进入管理界面的校验，true才能进入")
     @GetMapping("/judgeUser")
     public GlobalResult<?> judgeUser(@RequestParam(value = "userName", required = true) String userName, @RequestParam(value = "passWord", required = true) String passWord){
-        return GlobalResult.newSuccess(userService.judgeUser(userName, passWord));
+        return GlobalResult.newSuccess(userService.judgeUser(userName, passWord + Const.PROJECT_NAME));
     }
 
     @ApiOperation("删除用户")

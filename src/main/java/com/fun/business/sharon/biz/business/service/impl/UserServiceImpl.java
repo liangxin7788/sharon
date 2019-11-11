@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fun.business.sharon.biz.business.vo.UserVo;
 import com.fun.business.sharon.utils.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,19 +59,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Boolean judgeUser(String userName, String passWord) {
+    public Boolean judgeUser(String userName, String password) {
         User user = findByUserName(userName);
         if (null != user) {
-            MessageDigest md = null;
-            try {
-                md = MessageDigest.getInstance("md5");
-            } catch (NoSuchAlgorithmException e) {
-                log.error("获取md5算法实例失败！" + e.getMessage(),e);
-            }
-            byte[] bytes = md.digest(passWord.getBytes());
-            String savePwd = Base64.getEncoder().encodeToString(bytes);
-
-            return user.getPassword().equals(savePwd);
+            return user.getPassword().equals(DigestUtils.md5Hex(password));
         }
         return false;
     }
