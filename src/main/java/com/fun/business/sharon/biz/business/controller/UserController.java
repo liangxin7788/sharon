@@ -59,11 +59,10 @@ public class UserController {
         }
         // md5Hex加密
         String savePwd = DigestUtils.md5Hex(password + Const.PROJECT_NAME);
+        BeanUtils.copyProperties(user, newUser);
 
         newUser.setCreateAt(new Date());
         newUser.setUpdateAt(new Date());
-        BeanUtils.copyProperties(user, newUser);
-
         newUser.setPassword(savePwd);
         return GlobalResult.newSuccess(userService.save(newUser));
     }
