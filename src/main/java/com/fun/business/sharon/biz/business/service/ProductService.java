@@ -24,4 +24,6 @@ public interface ProductService extends IService<Product> {
     int addOrEditProduct(AddProductVo productVo);
 
     Integer delProduct(List<Integer> productIds);
+
+    Product getDetailById(Integer productId);
 }

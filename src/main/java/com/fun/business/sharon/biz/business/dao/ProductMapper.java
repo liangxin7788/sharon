@@ -25,4 +25,5 @@ public interface ProductMapper extends BaseMapper<Product> {
 
     List<Product> getProductList(@Param("vo") ProductInfoSearchVo vo, int offset, int pageSize);
 
+    Product getDetailById(@Param("productId")Integer productId);
 }

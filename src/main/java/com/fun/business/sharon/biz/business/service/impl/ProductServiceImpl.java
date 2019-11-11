@@ -112,6 +112,11 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         return 0;
     }
 
+    @Override
+    public Product getDetailById(Integer productId) {
+        return productMapper.getDetailById(productId);
+    }
+
     private void uploadFile(MultipartFile[] file, Integer productId) {
         try {
             if (ObjectUtil.isNotEmpty(file)) {

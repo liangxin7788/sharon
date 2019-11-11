@@ -61,13 +61,11 @@ public class ProductController {
         return GlobalResult.newSuccess(productService.delProduct(productIds));
     }
 
-
-
-
-
-
-
-
+    @ApiOperation("获取产品详情")
+    @GetMapping("/getDetailById")
+    public GlobalResult<?> getDetailById(@RequestParam(value = "productId") Integer productId){
+        return GlobalResult.newSuccess(productService.getDetailById(productId));
+    }
 
     @ApiOperation("测试秒杀")
     @GetMapping("/testSeckill")
