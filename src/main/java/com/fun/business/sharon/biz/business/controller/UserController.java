@@ -6,6 +6,7 @@ import com.fun.business.sharon.biz.business.bean.User;
 import com.fun.business.sharon.biz.business.service.UserService;
 import com.fun.business.sharon.biz.business.vo.UserVo;
 import com.fun.business.sharon.common.GlobalResult;
+import com.fun.business.sharon.common.OperateException;
 import com.fun.business.sharon.utils.CheckParamUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,6 +42,13 @@ public class UserController {
     public GlobalResult<?> addUser(@RequestBody User user) throws NoSuchAlgorithmException {
         CheckParamUtil.checkParamForCommit(user, new String[]{"userName", "password", "description"});
         log.info("添加用户：" + JSON.toJSONString(user) + new Date());
+        // 系统不允许同名用户存在
+        String userName = user.getUserName();
+        User hasUser = userService.judgeArleadyHasUser(userName);
+        if (null != hasUser) {
+            throw new OperateException("同名用户已存在，请重新添加！");
+        }
+
         User newUser = new User();
         String password = user.getPassword();
 
@@ -65,6 +73,12 @@ public class UserController {
     @GetMapping("/judgeUser")
     public GlobalResult<?> judgeUser(@RequestParam(value = "userName", required = true) String userName, @RequestParam(value = "passWord", required = true) String passWord){
         return GlobalResult.newSuccess(userService.judgeUser(userName, passWord));
+    }
+
+    @ApiOperation("删除用户")
+    @DeleteMapping("/delUser")
+    public GlobalResult<?> delUser(@RequestParam(value = "userId", required = true) Integer userId){
+        return GlobalResult.newSuccess(userService.removeById(userId));
     }
 
 //    @ApiOperation("测试mq")

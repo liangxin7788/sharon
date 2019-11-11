@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fun.business.sharon.biz.business.vo.UserVo;
 import com.fun.business.sharon.utils.ObjectUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,9 @@ import com.fun.business.sharon.biz.business.bean.User;
 import com.fun.business.sharon.biz.business.dao.UserMapper;
 import com.fun.business.sharon.biz.business.service.UserService;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -23,6 +27,7 @@ import java.util.List;
  * @since 2019-06-11
  */
 @Service
+@Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Autowired
@@ -44,15 +49,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         int total = userMapper.getUserListCount(vo);
         List<User> list = userMapper.getUserList(vo, offset, pageSize);
 
-        return null;
+        page.setTotal(total);
+        page.setRecords(list);
+        page.setCurrent(pageIndex);
+        page.setSize(pageSize);
+
+        return page;
     }
 
     @Override
     public Boolean judgeUser(String userName, String passWord) {
         User user = findByUserName(userName);
         if (null != user) {
-            return user.getPassword().equals(passWord);
+            MessageDigest md = null;
+            try {
+                md = MessageDigest.getInstance("md5");
+            } catch (NoSuchAlgorithmException e) {
+                log.error("获取md5算法实例失败！" + e.getMessage(),e);
+            }
+            byte[] bytes = md.digest(passWord.getBytes());
+            String savePwd = Base64.getEncoder().encodeToString(bytes);
+
+            return user.getPassword().equals(savePwd);
         }
         return false;
+    }
+
+    @Override
+    public User judgeArleadyHasUser(String userName) {
+        return findByUserName(userName);
     }
 }

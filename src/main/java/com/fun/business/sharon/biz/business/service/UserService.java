@@ -20,4 +20,6 @@ public interface UserService extends IService<User> {
     IPage<User> getUserList(UserVo vo);
 
     Boolean judgeUser(String userName, String passWord);
+
+    User judgeArleadyHasUser(String userName);
 }
