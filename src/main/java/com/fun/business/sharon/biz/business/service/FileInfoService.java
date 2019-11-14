@@ -8,6 +8,8 @@ import com.fun.business.sharon.biz.business.vo.EditFileInfoVo;
 import com.fun.business.sharon.biz.business.vo.FileSearchVo;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -24,5 +26,5 @@ public interface FileInfoService extends IService<FileInfo> {
 
     Integer delFile(DelFileVo vo);
 
-    Integer uploadFile(MultipartFile[] file, String description);
+    List<Integer> uploadFile(MultipartFile[] file, String description);
 }

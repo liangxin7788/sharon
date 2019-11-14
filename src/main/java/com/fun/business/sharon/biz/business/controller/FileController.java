@@ -23,6 +23,7 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.List;
 
 /**
  * <p>
@@ -43,8 +44,8 @@ public class FileController {
     @ApiOperation("文件上传")
     @PostMapping(value = "/uploadFile")
     public GlobalResult<?> uploadFile(@RequestParam(value = "file", required = true)MultipartFile[] file, @ApiParam("文件描述信息") @RequestParam(value = "description", required = false) String description) {
-        Integer result = fileInfoService.uploadFile(file, description);
-        return GlobalResult.newSuccess(result);
+        List<Integer> urls = fileInfoService.uploadFile(file, description);
+        return GlobalResult.newSuccess(urls);
     }
 
     @GetMapping("/downloadFile")

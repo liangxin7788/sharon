@@ -3,7 +3,9 @@ package com.fun.business.sharon.biz.business.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fun.business.sharon.biz.business.bean.FileInfo;
+import com.fun.business.sharon.biz.business.bean.ProductPicInfo;
 import com.fun.business.sharon.biz.business.dao.FileInfoMapper;
+import com.fun.business.sharon.biz.business.dao.ProductPicInfoMapper;
 import com.fun.business.sharon.biz.business.service.FileInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fun.business.sharon.biz.business.vo.DelFileVo;
@@ -23,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +46,9 @@ public class FileInfoServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> i
 
     @Autowired
     private FileInfoMapper fileInfoMapper;
+
+    @Autowired
+    private ProductPicInfoMapper productPicInfoMapper;
 
     @Override
     public IPage<FileInfo> getFileInfoList(FileSearchVo vo) {
@@ -117,8 +123,54 @@ public class FileInfoServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> i
     }
 
     @Override
-    public Integer uploadFile(MultipartFile[] file, String description) {
-        Integer result = 0;
+    public List<Integer> uploadFile(MultipartFile[] file, String description) {
+        List<Integer> ids = new ArrayList<>();
+        try {
+            if (ObjectUtil.isNotEmpty(file)) {
+                for (MultipartFile sonFile : file) {
+                    String fileType = "";
+                    String originalName = sonFile.getOriginalFilename();
+                    if (StringUtil.isNotEmpty(originalName)) {
+                        String prefix = originalName.substring(originalName.lastIndexOf(".") + 1);
+                        if ("doc".equals(prefix) || "docx".equals(prefix)) {
+                            fileType = Const.DOC_FILE;
+                        } else if ("xls".equals(prefix) || "xlsx".equals(prefix)) {
+                            fileType = Const.EXCEL_FILE;
+                        } else {
+                            fileType = Const.PIC_FILE;
+                        }
+                    }
+                    String uniquenessName = new Date().getTime() + originalName;
+                    String filePath = uploadPath + fileType + "/" + uniquenessName;
+                    File newFile = new File(filePath);
+                    //如果文件的目录不存在则创建目录
+                    if(!newFile.getParentFile().exists()){
+                        newFile.getParentFile().mkdirs();
+                    }
+                    sonFile.transferTo(newFile);
+                    // 插入照片表 DOMAIN
+                    ProductPicInfo productPicInfo = new ProductPicInfo();
+                    productPicInfo.setImageUrl(Const.DOMAIN + uniquenessName);
+                    // 包含 - 则认为是主图，非主图数据库有默认
+                    if (uniquenessName.contains("-")) {
+                        productPicInfo.setIsFirstImage(1);
+                    }
+                    productPicInfo.setCreateAt(new Date());
+                    productPicInfoMapper.insert(productPicInfo);
+                    ids.add(productPicInfo.getId());
+                }
+            }
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+            throw new OperateException("图片上传失败！");
+        }
+        return ids;
+    }
+
+
+//    @Override
+//    public Integer uploadFile(MultipartFile[] file, String description) {
+//        Integer result = 0;
 //        try {
 //            // 未定义上传路径，上传至默认目录
 //            if (ObjectUtil.isNotEmpty(file)) {
@@ -169,6 +221,6 @@ public class FileInfoServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> i
 //        } catch (IOException e) {
 //            log.error(e.getMessage(),e);
 //        }
-        return result;
-    }
+//        return result;
+//    }
 }

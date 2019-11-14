@@ -130,6 +130,15 @@
         <appender-ref ref="STDOUT" />
     </logger>
 
+    <!-- 屏蔽启动时打印了所有接口信息 -->
+    <logger name="org.springframework" level="WARN" additivity="false">
+        <appender-ref ref="FILE-warn" />
+        <appender-ref ref="FILE-info" />
+        <appender-ref ref="FILE-debug" />
+        <appender-ref ref="FILE-error" />
+        <appender-ref ref="STDOUT" />
+    </logger>
+
     <!-- root节点将日志级别大于等于info的交给已经配置好的名为"STDOUT"的<appender>进行处理，"STDOUT"将信息打印到控制台上 -->
     <root level="info">
         <appender-ref ref="STDOUT" />

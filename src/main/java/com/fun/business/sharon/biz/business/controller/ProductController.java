@@ -6,7 +6,6 @@ import com.fun.business.sharon.biz.business.bean.Product;
 import com.fun.business.sharon.biz.business.service.ProductService;
 import com.fun.business.sharon.biz.business.vo.AddProductVo;
 import com.fun.business.sharon.biz.business.vo.ProductInfoSearchVo;
-import com.fun.business.sharon.biz.seckill.service.SeckillService;
 import com.fun.business.sharon.common.GlobalResult;
 import com.fun.business.sharon.utils.ObjectUtil;
 import io.swagger.annotations.Api;
@@ -14,8 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -47,7 +45,7 @@ public class ProductController {
 
     @ApiOperation("添加/编辑产品信息")
     @PostMapping("/addOrEditProduct")
-    public GlobalResult<?> addOrEditProduct(AddProductVo productVo){
+    public GlobalResult<?> addOrEditProduct(@RequestBody AddProductVo productVo){
         int result = 0;
         if (ObjectUtil.isNotEmpty(productVo)) {
             result = productService.addOrEditProduct(productVo);

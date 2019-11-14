@@ -15,16 +15,16 @@ import lombok.extern.slf4j.Slf4j;
 public class RedisUtil {
 
 	private static StringRedisTemplate stringRedisTemplate;
-	
+
 	@Autowired
 	public void setStringRedisTemplate(StringRedisTemplate stringRedisTemplate) {
 		RedisUtil.stringRedisTemplate = stringRedisTemplate;
 	}
-	
+
 	public static String getValueFromRedis(String key) {
 		return StringUtil.isEmpty(key) ? null : getValueFromRedis(key, "");
 	}
-	
+
 	public static String getValueFromRedis(String key, String defaultValue) {
 		try {
 			String redisValue = stringRedisTemplate.opsForValue().get(key);
@@ -34,7 +34,7 @@ public class RedisUtil {
 			return defaultValue;
 		}
 	}
-	
+
 	/**
 	 * 将字符串加入缓存，默认保存30分钟
 	 * @param key
@@ -49,7 +49,7 @@ public class RedisUtil {
 			log.debug("set value to redis error, key : " + key + ", value : " + value, e);
 		}
 	}
-	
+
 	/**
 	 * 将对象的json格式放进缓存中
 	 * @param key
@@ -78,7 +78,7 @@ public class RedisUtil {
 			log.debug("set value to redis error, key : " + key + ", value : " + value, e);
 		}
 	}
-	
+
 	/**
 	 * 清除指定的key对应的redis中数据
 	 */
@@ -91,7 +91,7 @@ public class RedisUtil {
 			log.debug("delete data in redis error, key : " + key, e);
 		}
 	}
-	
+
 	/**
 	 * 模糊清除redis数据
 	 */
@@ -104,6 +104,6 @@ public class RedisUtil {
 			log.debug("delete data in redis error, key : " + key, e);
 		}
 	}
-	
+
 
 }

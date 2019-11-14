@@ -3,6 +3,8 @@ package com.fun.business.sharon.biz.business.vo;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * @Package: com.fun.business.sharon.biz.business.vo
  * @ClassName: AddProductVo
@@ -45,8 +47,8 @@ public class AddProductVo {
     private String applyTo;
 
     /**
-     * 主图
+     * 图片信息
      */
-    private MultipartFile[] images;
+    private List<Integer> imageIds;
 
 }

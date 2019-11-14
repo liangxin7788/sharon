@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.fun.business.sharon.biz.business.vo.AddProductVo;
 import com.fun.business.sharon.biz.business.vo.ProductInfoSearchVo;
 import com.fun.business.sharon.common.GlobalResult;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

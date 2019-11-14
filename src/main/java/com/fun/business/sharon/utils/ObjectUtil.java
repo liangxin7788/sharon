@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.domain.Page;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fun.business.sharon.common.OperateException;
@@ -40,9 +38,6 @@ public class ObjectUtil {
 				isEmpty = obj.hashCode() == 0;
 			} else if (obj.getClass().isArray()) {// 数组
 				isEmpty = Array.getLength(obj) == 0;
-			} else if(obj instanceof Page){
-				List<?> content = ((Page<?>)obj).getContent();
-				isEmpty=(content==null||content.size()==0);
 			}
 		} else {
 			isEmpty = true;

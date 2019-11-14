@@ -74,7 +74,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
     @Override
     @Transactional
-    public int addOrEditProduct(AddProductVo productVo) {
+    public int addOrEditProduct(AddProductVo productVo/*, MultipartFile[] images*/) {
         Integer result = 0;
         if (ObjectUtil.isNotEmpty(productVo.getId())) { // 编辑
             log.info(new Date()  + "编辑产品信息：" + JSON.toJSONString(productVo));
@@ -91,8 +91,19 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             product.setUnitTag(uuid);
             insertOrUpdateProductInfo(product, productVo);
             result = productMapper.insert(product);
+
             // 插入图片表
-            uploadFile(productVo.getImages(), product.getId());
+            List<Integer> imagesIds = productVo.getImageIds();
+            if (imagesIds != null && imagesIds.size() > 0) {
+                Integer productId = product.getId();
+                List<ProductPicInfo> productPicInfos = productPicInfoMapper.selectBatchIds(imagesIds);
+                if (productPicInfos != null && productPicInfos.size() > 0) {
+                    productPicInfos.forEach( t -> {
+                        t.setProductId(productId);
+                        productPicInfoMapper.updateById(t);
+                    });
+                }
+            }
         }
         return result;
     }
@@ -117,48 +128,48 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         return productMapper.getDetailById(productId);
     }
 
-    private void uploadFile(MultipartFile[] file, Integer productId) {
-        try {
-            if (ObjectUtil.isNotEmpty(file)) {
-                for (MultipartFile sonFile : file) {
-                    String fileType = "";
-                    String originalName = sonFile.getOriginalFilename();
-                    if (StringUtil.isNotEmpty(originalName)) {
-                        String prefix = originalName.substring(originalName.lastIndexOf(".") + 1);
-                        if ("doc".equals(prefix) || "docx".equals(prefix)) {
-                            fileType = Const.DOC_FILE;
-                        } else if ("xls".equals(prefix) || "xlsx".equals(prefix)) {
-                            fileType = Const.EXCEL_FILE;
-                        } else {
-                            fileType = Const.PIC_FILE;
-                        }
-                    }
-                    String uniquenessName = new Date().getTime() + originalName;
-                    String filePath = uploadPath + fileType + "/" + uniquenessName;
-                    File newFile = new File(filePath);
-                    //如果文件的目录不存在则创建目录
-                    if(!newFile.getParentFile().exists()){
-                        newFile.getParentFile().mkdirs();
-                    }
-                    sonFile.transferTo(newFile);
-                    // 插入照片表 DOMAIN
-                    ProductPicInfo productPicInfo = new ProductPicInfo();
-                    productPicInfo.setProductId(productId);
-                    productPicInfo.setImageUrl(Const.DOMAIN + uniquenessName);
-                    // 包含 - 则认为是主图，非主图数据库有默认
-                    if (uniquenessName.contains("-")) {
-                        productPicInfo.setIsFirstImage(1);
-                    }
-                    productPicInfo.setCreateAt(new Date());
-                    productPicInfoMapper.insert(productPicInfo);
-                }
-            }
-        } catch (IOException e) {
-            log.error(e.getMessage(),e);
-            throw new OperateException("图片上传失败！");
-        }
-
-    }
+//    private void uploadFile(MultipartFile[] file, Integer productId) {
+//        try {
+//            if (ObjectUtil.isNotEmpty(file)) {
+//                for (MultipartFile sonFile : file) {
+//                    String fileType = "";
+//                    String originalName = sonFile.getOriginalFilename();
+//                    if (StringUtil.isNotEmpty(originalName)) {
+//                        String prefix = originalName.substring(originalName.lastIndexOf(".") + 1);
+//                        if ("doc".equals(prefix) || "docx".equals(prefix)) {
+//                            fileType = Const.DOC_FILE;
+//                        } else if ("xls".equals(prefix) || "xlsx".equals(prefix)) {
+//                            fileType = Const.EXCEL_FILE;
+//                        } else {
+//                            fileType = Const.PIC_FILE;
+//                        }
+//                    }
+//                    String uniquenessName = new Date().getTime() + originalName;
+//                    String filePath = uploadPath + fileType + "/" + uniquenessName;
+//                    File newFile = new File(filePath);
+//                    //如果文件的目录不存在则创建目录
+//                    if(!newFile.getParentFile().exists()){
+//                        newFile.getParentFile().mkdirs();
+//                    }
+//                    sonFile.transferTo(newFile);
+//                    // 插入照片表 DOMAIN
+//                    ProductPicInfo productPicInfo = new ProductPicInfo();
+//                    productPicInfo.setProductId(productId);
+//                    productPicInfo.setImageUrl(Const.DOMAIN + uniquenessName);
+//                    // 包含 - 则认为是主图，非主图数据库有默认
+//                    if (uniquenessName.contains("-")) {
+//                        productPicInfo.setIsFirstImage(1);
+//                    }
+//                    productPicInfo.setCreateAt(new Date());
+//                    productPicInfoMapper.insert(productPicInfo);
+//                }
+//            }
+//        } catch (IOException e) {
+//            log.error(e.getMessage(),e);
+//            throw new OperateException("图片上传失败！");
+//        }
+//
+//    }
 
     private void insertOrUpdateProductInfo(Product product, AddProductVo productVo) {
         String applyTo = productVo.getApplyTo();
