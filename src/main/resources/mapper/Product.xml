@@ -44,7 +44,7 @@
         select count(1)
         from product p
         <where>
-            1=1
+            1=1 and p.status = '1'
             <if test="vo.createAt != null">
                 and p.create_at &gt;=#{vo.createAt}
             </if>
@@ -70,7 +70,7 @@
         select p.*
         from product p
         <where>
-            1=1
+            1=1 and p.status = '1'
             <if test="vo.createAt != null">
                 and p.create_at &gt;=#{vo.createAt}
             </if>

@@ -91,4 +91,4 @@ spring:
     addresses: 127.0.0.1:5672
 
 sharon:
-  uploadPath: /home/sharon/picture/
+  uploadPath: /home/sharon/

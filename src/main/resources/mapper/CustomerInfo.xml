@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fun.business.sharon.biz.business.dao.CustomerInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.fun.business.sharon.biz.business.bean.CustomerInfo">
+        <id column="id" property="id" />
+        <result column="nick_name" property="nickName" />
+        <result column="full_name" property="fullName" />
+        <result column="email" property="email" />
+        <result column="country" property="country" />
+        <result column="company" property="company" />
+        <result column="phone_number" property="phoneNumber" />
+        <result column="grade" property="grade" />
+        <result column="type" property="type" />
+        <result column="industry" property="industry" />
+        <result column="last_contact_time" property="lastContactTime" />
+        <result column="main_products" property="mainProducts" />
+        <result column="create_at" property="createAt" />
+        <result column="update_at" property="updateAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, nick_name, full_name, email, country, company, phone_number, grade, type, industry, last_contact_time, main_products, create_at, update_at
+    </sql>
+
+    <select id="selectCustomerInfoList" resultType="com.fun.business.sharon.biz.business.bean.CustomerInfo">
+        select * from customer_info ci
+        <where>
+            1 = 1
+            <if test="vo.createAtStart != null">
+                and ci.create_at >= #{vo.createAtStart}
+            </if>
+            <if test="vo.createAtEnd != null">
+                and ci.create_at &lt;= #{vo.createAtEnd}
+            </if>
+            <if test="vo.country != null and vo.country != ''">
+                and ci.country = #{vo.country}
+            </if>
+            <if test="vo.grade != null and vo.grade != ''">
+                and ci.grade = #{vo.grade}
+            </if>
+            <if test="vo.type != null and vo.type != ''">
+                and ci.type = #{vo.type}
+            </if>
+            <if test="vo.fullName != null and vo.fullName != ''">
+                and ci.full_name like concat('%', #{vo.fullName} , '%')
+            </if>
+        </where>
+        limit #{offset}, #{pageSize}
+    </select>
+
+    <select id="selectCustomerInfoListCount" resultType="int">
+        select count(1) from customer_info ci
+        <where>
+            1 = 1
+            <if test="vo.createAtStart != null">
+                and ci.create_at >= #{vo.createAtStart}
+            </if>
+            <if test="vo.createAtEnd != null">
+                and ci.create_at &lt;= #{vo.createAtEnd}
+            </if>
+            <if test="vo.country != null and vo.country != ''">
+                and ci.country = #{vo.country}
+            </if>
+            <if test="vo.grade != null and vo.grade != ''">
+                and ci.grade = #{vo.grade}
+            </if>
+            <if test="vo.type != null and vo.type != ''">
+                and ci.type = #{vo.type}
+            </if>
+            <if test="vo.fullName != null and vo.fullName != ''">
+                and ci.full_name like concat('%', #{vo.fullName} , '%')
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
